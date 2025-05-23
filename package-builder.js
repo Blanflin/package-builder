@@ -6,25 +6,31 @@ const packageData = {
       id: "wedding",
       name: "Wedding",
       description: "Capture every moment of your special day",
-      imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://files.fm/f/zpf783wpe7"
     },
     {
       id: "small-event",
       name: "Small Event",
       description: "Perfect for birthdays, parties, and gatherings",
-      imageUrl: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
     },
     {
       id: "production",
       name: "Production",
       description: "Commercial, product, and promotional content",
-      imageUrl: "https://images.unsplash.com/photo-1574717024453-354056afd6fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://files.fm/f/7q9hsapjas"
     },
     {
       id: "portrait",
       name: "Portrait Session",
       description: "Individual or family portrait photography",
-      imageUrl: "https://images.unsplash.com/photo-1542103749-8ef59b94f47e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://files.fm/f/3njv5pn9n3"
+    },
+    {
+      id: "sports",
+      name: "Sports Photography",
+      description: "Action shots and team photos",
+      imageUrl: "https://files.fm/f/ny2nyg9tnb"
     }
   ],
   serviceTypes: [
@@ -32,7 +38,7 @@ const packageData = {
       id: "photography",
       name: "Photography",
       description: "Professional photography services",
-      imageUrl: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://files.fm/f/bz8kaq37aj"
     },
     {
       id: "videography",
@@ -50,656 +56,344 @@ const packageData = {
   packages: {
     "wedding-photography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 1499,
-        description: "Perfect for intimate weddings with essential coverage",
+        id: "photo-a",
+        name: "Package A",
+        price: 500,
+        description: "Photography Package A for Weddings.",
         features: [
-          "6 hours of coverage",
-          "1 professional photographer",
-          "Online gallery with 300+ edited photos",
-          "Digital download of all images",
-          "Engagement photo session (1 hour)",
-          "Pre-wedding consultation"
+          "2 Hr Coverage",
+          "Ceremony OR Reception",
+          "10 Detailed Edits",
+          "20 Candid Photos",
+          "Consultation",
+          "Retainer: $250"
         ]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 2499,
-        description: "Our most popular package for comprehensive wedding coverage",
+        id: "photo-b",
+        name: "Package B",
+        price: 750,
+        description: "Photography Package B for Weddings.",
         features: [
-          "8 hours of coverage",
-          "2 professional photographers",
-          "Online gallery with 500+ edited photos",
-          "Digital download of all images",
-          "Engagement photo session (2 hours)",
-          "Pre-wedding consultation",
-          "Wedding day timeline planning",
-          "Custom USB in wooden box with prints"
+          "4 Hr Coverage",
+          "Ceremony & Reception",
+          "20 Detailed Edits",
+          "Digital access to all photos taken",
+          "Consultation",
+          "Retainer: $375"
         ]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 3499,
-        description: "Complete coverage for your perfect day with premium services",
+        id: "photo-d",
+        name: "Package D",
+        price: 900,
+        description: "Photography Package D for Weddings.",
         features: [
-          "10 hours of coverage",
-          "2 professional photographers",
-          "Online gallery with 700+ edited photos",
-          "Digital download of all images",
-          "Engagement photo session (3 hours)",
-          "Bridal or boudoir session (2 hours)",
-          "Pre-wedding consultation",
-          "Wedding day timeline planning",
-          "Custom designed wedding album (40 pages)",
-          "Custom USB in wooden box with prints",
-          "20 thank you cards with envelopes"
+          "8 Hr Coverage",
+          "Ceremony & Reception (Extra EQ Cost Incl.)",
+          "30 Detailed Edits",
+          "Digital access to all photos taken",
+          "Bonus 3D photo",
+          "Consultation",
+          "Retainer: $400"
         ]
       }
     ],
     "wedding-videography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 1699,
-        description: "Capture the key moments of your special day",
+        id: "video-a",
+        name: "Video Package A",
+        price: 1000,
+        description: "Videography Package A for Weddings.",
         features: [
-          "6 hours of coverage",
-          "1 professional videographer",
-          "5-7 minute highlight film",
-          "Digital delivery of final video",
-          "Professional audio recording of ceremony",
-          "Pre-wedding consultation"
+          "3 Hr Coverage",
+          "Ceremony OR Reception",
+          "1-2 min Highlight Reel",
+          "20 Candid Photos",
+          "10 Detailed Edits",
+          "Consultation",
+          "Retainer: $500"
         ]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 2699,
-        description: "Comprehensive video coverage of your wedding day",
+        id: "video-b",
+        name: "Video Package B",
+        price: 1500,
+        description: "Videography Package B for Weddings.",
         features: [
-          "8 hours of coverage",
-          "2 professional videographers",
-          "7-10 minute highlight film",
-          "30-minute feature film",
-          "Digital delivery of all videos",
-          "Professional audio recording of ceremony and speeches",
-          "Drone footage (weather permitting)",
-          "Pre-wedding consultation",
-          "Custom USB in wooden box"
+          "4 Hr Coverage",
+          "Ceremony & Reception",
+          "Drone Footage",
+          "3-4 min Highlight Reel",
+          "30 Candid Photos",
+          "15 Detailed Edits",
+          "Consultation",
+          "Retainer: $750"
         ]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 3699,
-        description: "Premium video coverage with cinematic storytelling",
+        id: "video-d",
+        name: "Video Package D",
+        price: 2800,
+        description: "Videography Package D for Weddings.",
         features: [
-          "10 hours of coverage",
-          "2 professional videographers",
-          "10-15 minute highlight film",
-          "60-90 minute feature film",
-          "Digital delivery of all videos",
-          "Professional audio recording of ceremony and speeches",
-          "Drone footage (weather permitting)",
-          "Same-day edit (3-5 minute preview)",
-          "Pre-wedding consultation",
-          "Custom USB in wooden box",
-          "Raw footage of entire day"
+          "8 Hr Coverage",
+          "Ceremony & Reception",
+          "Drone Footage",
+          "Nxt Day Trailer",
+          "10-15 min Video",
+          "Equipment: 3 Cameras",
+          "50/75 Candid Photos",
+          "20 Detailed Edits",
+          "Consultation",
+          "Retainer: $1000"
         ]
       }
     ],
     "wedding-both": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 2899,
-        description: "Essential photo and video coverage for your wedding day",
+        id: "bundle-a",
+        name: "Bundle A",
+        price: 1499,
+        description: "Photo & Video Bundle A for Weddings.",
         features: [
-          "6 hours of coverage",
-          "1 professional photographer",
-          "1 professional videographer",
-          "Online gallery with 300+ edited photos",
-          "5-7 minute highlight film",
-          "Digital download of all content",
-          "Engagement photo session (1 hour)",
-          "Professional audio recording of ceremony",
-          "Pre-wedding consultation"
+          "4 Hr Coverage",
+          "Ceremony & Reception",
+          "5 min Video",
+          "Online gallery with digital photos",
+          "Consultation",
+          "Retainer: $500"
         ]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 4699,
-        description: "Comprehensive photo and video coverage for your special day",
+        id: "bundle-b",
+        name: "Bundle B",
+        price: 1999,
+        description: "Photo & Video Bundle B for Weddings.",
         features: [
-          "8 hours of coverage",
-          "2 professional photographers",
-          "2 professional videographers",
-          "Online gallery with 500+ edited photos",
-          "7-10 minute highlight film",
-          "30-minute feature film",
-          "Digital download of all content",
-          "Engagement photo session (2 hours)",
-          "Professional audio recording of ceremony and speeches",
-          "Drone footage (weather permitting)",
-          "Pre-wedding consultation",
-          "Wedding day timeline planning",
-          "Custom USB in wooden box with prints"
+          "6 Hr Coverage",
+          "Ceremony, wedding party venue (dress/gathering & Reception)",
+          "Drone Footage",
+          "Trailer within 48 hrs",
+          "15 min Video",
+          "Online gallery with digital photos",
+          "Consultation",
+          "Retainer: $1000"
         ]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 6499,
-        description: "Premium photo and video coverage with luxury deliverables",
+        id: "bundle-c",
+        name: "Bundle C",
+        price: 3499,
+        description: "Photo & Video Bundle C for Weddings.",
         features: [
-          "10 hours of coverage",
-          "2 professional photographers",
-          "2 professional videographers",
-          "Online gallery with 700+ edited photos",
-          "10-15 minute highlight film",
-          "60-90 minute feature film",
-          "Digital download of all content",
-          "Engagement photo session (3 hours)",
-          "Bridal or boudoir session (2 hours)",
-          "Professional audio recording of ceremony and speeches",
-          "Drone footage (weather permitting)",
-          "Same-day edit (3-5 minute preview)",
-          "Pre-wedding consultation",
-          "Wedding day timeline planning",
-          "Custom designed wedding album (40 pages)",
-          "Custom USB in wooden box with prints",
-          "20 thank you cards with envelopes"
+          "Full Coverage (8hrs)",
+          "Ceremony, wedding party venue (dress/gathering & Reception)",
+          "Drone Footage",
+          "Social Media Highlight reel",
+          "Next Day wedding Trailer",
+          "20 min Video",
+          "Online gallery with digital photos",
+          "Consultation",
+          "Retainer: $1500"
+        ]
+      },
+      {
+        id: "bundle-s",
+        name: "Bundle S (Premium)",
+        price: 5000,
+        description: "Premium Photo & Video Bundle S for Weddings.",
+        features: [
+          "Full Coverage (8hrs)",
+          "Ceremony, wedding party venue (dress/gathering & Reception)",
+          "Equipment: 3 Cameras",
+          "Drone Footage",
+          "Next Day wedding Trailer",
+          "Social Media Highlight reel",
+          "360 video of full ceremony",
+          "PREMIUM Gifts! (headset + 3D video of ceremony)",
+          "1 hr wedding Documentary",
+          "Online gallery with digital photos",
+          "Consultation",
+          "Retainer: $2000"
         ]
       }
     ],
     "small-event-photography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 499,
-        description: "Basic coverage for small events and gatherings",
-        features: [
-          "2 hours of coverage",
-          "1 professional photographer",
-          "Online gallery with 100+ edited photos",
-          "Digital download of all images",
-          "Pre-event consultation"
-        ]
+        id: "sme-photo-a",
+        name: "Photo Package A",
+        price: 249,
+        description: "Small Event Photography Package A.",
+        features: ["Up to 1 Hr session", "1 Location", "1 Outfit Change", "Minimum of 5 Detailed Photos", "20 candids", "Retainer: $75"]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 799,
-        description: "Comprehensive coverage for your special event",
-        features: [
-          "4 hours of coverage",
-          "1 professional photographer",
-          "Online gallery with 200+ edited photos",
-          "Digital download of all images",
-          "Pre-event consultation",
-          "Event timeline planning",
-          "10 professional prints (5x7)"
-        ]
+        id: "sme-photo-b",
+        name: "Photo Package B",
+        price: 339,
+        description: "Small Event Photography Package B.",
+        features: ["Up to 2 Hr session", "2 Locations", "2 Outfit Changes", "Minimum of 10 Detailed Photos", "All candids", "Retainer: $125"]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 1199,
-        description: "Premium coverage for important celebrations",
-        features: [
-          "6 hours of coverage",
-          "1 professional photographer",
-          "Online gallery with 300+ edited photos",
-          "Digital download of all images",
-          "Pre-event consultation",
-          "Event timeline planning",
-          "Custom photo album (20 pages)",
-          "20 professional prints (5x7)"
-        ]
+        id: "sme-photo-c",
+        name: "Photo Package C",
+        price: 399,
+        description: "Small Event Photography Package C.",
+        features: ["Up to 3 Hr session", "3 Locations", "3 Outfit Changes", "Minimum of 15 Detailed Photos", "All candids", "Highlight reel", "Retainer: $175"]
       }
     ],
     "small-event-videography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 599,
-        description: "Basic video coverage for small events",
-        features: [
-          "2 hours of coverage",
-          "1 professional videographer",
-          "3-5 minute highlight video",
-          "Digital delivery of final video",
-          "Pre-event consultation"
-        ]
+        id: "sme-video-a",
+        name: "Video Package A",
+        price: 200,
+        description: "Small Event Videography Package A.",
+        features: ["1 Hr Coverage", "1 Location", "1-2 Min Highlight Video", "Retainer: $100"]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 899,
-        description: "Comprehensive video coverage for special events",
-        features: [
-          "4 hours of coverage",
-          "1 professional videographer",
-          "5-7 minute highlight video",
-          "15-20 minute feature video",
-          "Digital delivery of all videos",
-          "Professional audio recording",
-          "Pre-event consultation"
-        ]
+        id: "sme-video-b",
+        name: "Video Package B",
+        price: 400,
+        description: "Small Event Videography Package B.",
+        features: ["3 Hr Coverage", "2 Locations", "Drone Footage", "5 min Highlight Video", "Retainer: $200"]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 1299,
-        description: "Premium video coverage for important celebrations",
-        features: [
-          "6 hours of coverage",
-          "1 professional videographer",
-          "7-10 minute highlight video",
-          "25-30 minute feature video",
-          "Digital delivery of all videos",
-          "Professional audio recording",
-          "Drone footage (weather permitting)",
-          "Pre-event consultation",
-          "Custom USB with all footage"
-        ]
+        id: "sme-video-d",
+        name: "Video Package D",
+        price: 800,
+        description: "Small Event Videography Package D.",
+        features: ["6-8 Hr Coverage", "Multiple Locations", "Drone Footage", "10-15 min Video", "Equipment: 2 Cameras", "Retainer: $400"]
       }
     ],
     "small-event-both": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 999,
-        description: "Basic photo and video coverage for small events",
-        features: [
-          "2 hours of coverage",
-          "1 professional photographer",
-          "1 professional videographer",
-          "Online gallery with 100+ edited photos",
-          "3-5 minute highlight video",
-          "Digital delivery of all content",
-          "Pre-event consultation"
-        ]
+        id: "sme-both-a",
+        name: "Bundle Package A",
+        price: 449,
+        description: "Small Event Photo & Video Bundle A.",
+        features: ["Up to 1 Hr session", "1 Location", "5 Detailed Photos", "1-2 Min Highlight Video", "Retainer: $175"]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 1599,
-        description: "Comprehensive photo and video coverage for special events",
-        features: [
-          "4 hours of coverage",
-          "1 professional photographer",
-          "1 professional videographer",
-          "Online gallery with 200+ edited photos",
-          "5-7 minute highlight video",
-          "15-20 minute feature video",
-          "Digital delivery of all content",
-          "Professional audio recording",
-          "Pre-event consultation",
-          "Event timeline planning",
-          "10 professional prints (5x7)"
-        ]
+        id: "sme-both-b",
+        name: "Bundle Package B",
+        price: 799,
+        description: "Small Event Photo & Video Bundle B.",
+        features: ["Up to 2 Hr session", "2 Locations", "10 Detailed Photos", "5 min Highlight Video", "Drone Footage", "Retainer: $325"]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 2299,
-        description: "Premium photo and video coverage for important celebrations",
-        features: [
-          "6 hours of coverage",
-          "1 professional photographer",
-          "1 professional videographer",
-          "Online gallery with 300+ edited photos",
-          "7-10 minute highlight video",
-          "25-30 minute feature video",
-          "Digital delivery of all content",
-          "Professional audio recording",
-          "Drone footage (weather permitting)",
-          "Pre-event consultation",
-          "Event timeline planning",
-          "Custom photo album (20 pages)",
-          "20 professional prints (5x7)",
-          "Custom USB with all footage"
-        ]
+        id: "sme-both-c",
+        name: "Bundle Package C",
+        price: 1199,
+        description: "Small Event Photo & Video Bundle C.",
+        features: ["Up to 3 Hr session", "3 Locations", "15 Detailed Photos", "10-15 min Highlight Video", "Drone Footage", "Retainer: $575"]
       }
     ],
     "production-photography": [
       {
-        id: "basic",
-        name: "Essential",
+        id: "prod-photo-a",
+        name: "Basic Photo",
+        price: 499,
+        description: "Production Photography Package A.",
+        features: ["2 hours coverage", "10 final edited images", "Retainer: $200"]
+      },
+      {
+        id: "prod-photo-b",
+        name: "Standard Photo",
         price: 799,
-        description: "Basic product or promotional photography",
-        features: [
-          "3 hours of studio time",
-          "1 professional photographer",
-          "Up to 10 final edited images",
-          "Digital delivery of all images",
-          "Basic retouching",
-          "Pre-shoot consultation"
-        ]
+        description: "Production Photography Package B.",
+        features: ["4 hours coverage", "20 final edited images", "Basic retouching", "Retainer: $350"]
       },
       {
-        id: "standard",
-        name: "Professional",
-        price: 1299,
-        description: "Comprehensive product or promotional photography",
-        features: [
-          "5 hours of studio time",
-          "1 professional photographer",
-          "Up to 20 final edited images",
-          "Digital delivery of all images",
-          "Advanced retouching",
-          "Pre-shoot consultation",
-          "Multiple setups",
-          "Commercial usage rights"
-        ]
-      },
-      {
-        id: "premium",
-        name: "Enterprise",
-        price: 1999,
-        description: "Premium commercial photography for businesses",
-        features: [
-          "Full day studio time (8 hours)",
-          "1 professional photographer",
-          "1 assistant",
-          "Up to 30 final edited images",
-          "Digital delivery of all images",
-          "Premium retouching",
-          "Pre-shoot consultation",
-          "Multiple setups",
-          "Commercial usage rights",
-          "Rush delivery option",
-          "Raw files included"
-        ]
+        id: "prod-photo-c",
+        name: "Premium Photo",
+        price: 1199,
+        description: "Production Photography Package C.",
+        features: ["6 hours coverage", "30 final edited images", "Advanced retouching", "Retainer: $500"]
       }
     ],
     "production-videography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 999,
-        description: "Basic commercial video production",
-        features: [
-          "4 hours of filming",
-          "1 professional videographer",
-          "1-2 minute final video",
-          "2 rounds of revisions",
-          "Digital delivery of final video",
-          "Basic color grading",
-          "Pre-production consultation"
-        ]
+        id: "prod-video-a",
+        name: "Video Package A",
+        price: 300,
+        description: "Production Videography Package A.",
+        features: ["1 Hr Coverage", "1 Location", "1-2 Min Highlight Video", "Retainer: $150"]
       },
       {
-        id: "standard",
-        name: "Professional",
-        price: 1799,
-        description: "Comprehensive commercial video production",
-        features: [
-          "6 hours of filming",
-          "1 professional videographer",
-          "1 production assistant",
-          "2-3 minute final video",
-          "3 rounds of revisions",
-          "Digital delivery of final video",
-          "Professional color grading",
-          "Basic motion graphics",
-          "Pre-production consultation",
-          "Script assistance",
-          "Commercial usage rights"
-        ]
+        id: "prod-video-b",
+        name: "Video Package B",
+        price: 800,
+        description: "Production Videography Package B.",
+        features: ["3 Hr Coverage", "2 Locations", "Equipment: 2 Cameras", "Drone Footage", "5 min Highlight Video", "Retainer: $400"]
       },
       {
-        id: "premium",
-        name: "Enterprise",
-        price: 2999,
-        description: "Premium commercial video production for businesses",
-        features: [
-          "Full day filming (8 hours)",
-          "1 professional videographer",
-          "1 production assistant",
-          "1 audio technician",
-          "3-5 minute final video",
-          "Unlimited rounds of revisions",
-          "Digital delivery of final video",
-          "Premium color grading",
-          "Custom motion graphics",
-          "Professional voiceover",
-          "Licensed music",
-          "Pre-production consultation",
-          "Script development",
-          "Commercial usage rights",
-          "Rush delivery option"
-        ]
+        id: "prod-video-d",
+        name: "Video Package D",
+        price: 1500,
+        description: "Production Videography Package D.",
+        features: ["6-8 Hr Coverage", "Multiple Locations", "Equipment: 3 Cameras", "Drone Footage", "10-15 min Video", "Retainer: $600"]
       }
     ],
     "production-both": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 1599,
-        description: "Basic commercial photo and video production",
-        features: [
-          "4 hours of studio/filming time",
-          "1 professional photographer",
-          "1 professional videographer",
-          "Up to 10 final edited images",
-          "1-2 minute final video",
-          "2 rounds of revisions",
-          "Digital delivery of all content",
-          "Basic retouching/color grading",
-          "Pre-production consultation"
-        ]
+        id: "prod-both-a",
+        name: "Basic Bundle",
+        price: 999,
+        description: "Production Photo & Video Bundle A.",
+        features: ["3 hours coverage", "10 edited photos", "1-2 min video", "Retainer: $400"]
       },
       {
-        id: "standard",
-        name: "Professional",
-        price: 2799,
-        description: "Comprehensive commercial photo and video production",
-        features: [
-          "6 hours of studio/filming time",
-          "1 professional photographer",
-          "1 professional videographer",
-          "1 production assistant",
-          "Up to 20 final edited images",
-          "2-3 minute final video",
-          "3 rounds of revisions",
-          "Digital delivery of all content",
-          "Advanced retouching/color grading",
-          "Basic motion graphics",
-          "Pre-production consultation",
-          "Script assistance",
-          "Multiple setups",
-          "Commercial usage rights"
-        ]
+        id: "prod-both-b",
+        name: "Standard Bundle",
+        price: 1699,
+        description: "Production Photo & Video Bundle B.",
+        features: ["5 hours coverage", "20 edited photos", "2-3 min video", "Drone Footage", "Retainer: $700"]
       },
       {
-        id: "premium",
-        name: "Enterprise",
-        price: 4499,
-        description: "Premium commercial photo and video production for businesses",
-        features: [
-          "Full day studio/filming time (8 hours)",
-          "1 professional photographer",
-          "1 professional videographer",
-          "2 production assistants",
-          "1 audio technician",
-          "Up to 30 final edited images",
-          "3-5 minute final video",
-          "Unlimited rounds of revisions",
-          "Digital delivery of all content",
-          "Premium retouching/color grading",
-          "Custom motion graphics",
-          "Professional voiceover",
-          "Licensed music",
-          "Pre-production consultation",
-          "Script development",
-          "Multiple setups",
-          "Commercial usage rights",
-          "Rush delivery option",
-          "Raw files included"
-        ]
+        id: "prod-both-c",
+        name: "Premium Bundle",
+        price: 2499,
+        description: "Production Photo & Video Bundle C.",
+        features: ["7 hours coverage", "30 edited photos", "3-5 min video", "Drone Footage", "Advanced retouching/grading", "Retainer: $1000"]
       }
     ],
     "portrait-photography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 299,
-        description: "Basic portrait session for individuals or families",
-        features: [
-          "1 hour session at one location",
-          "1 outfit change",
-          "Online gallery with 20+ edited photos",
-          "Digital download of 10 images",
-          "Print release for purchased images"
-        ]
+        id: "portrait-a",
+        name: "Portrait Package A",
+        price: 249,
+        description: "Portrait Package A.",
+        features: ["Up to 1 Hr session", "1 Location", "1 Outfit Change", "Minimum of 5 Detailed Photos", "20 candids with access to cloud folder", "Retainer: $75"]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 499,
-        description: "Comprehensive portrait session with more options",
-        features: [
-          "2 hour session at one location",
-          "2-3 outfit changes",
-          "Online gallery with 40+ edited photos",
-          "Digital download of all images",
-          "Print release for all images",
-          "10 professional prints (5x7)"
-        ]
+        id: "portrait-b",
+        name: "Portrait Package B",
+        price: 339,
+        description: "Portrait Package B.",
+        features: ["Up to 2 Hr session", "2 Locations", "2 Outfit Changes", "Minimum of 10 Detailed Photos", "All candids with access to cloud folder", "Retainer: $125"]
       },
       {
-        id: "premium",
-        name: "Luxury",
-        price: 799,
-        description: "Premium portrait experience with luxury products",
-        features: [
-          "3 hour session at two locations",
-          "Unlimited outfit changes",
-          "Online gallery with 60+ edited photos",
-          "Digital download of all images",
-          "Print release for all images",
-          "Professional hair and makeup",
-          "Custom photo album (20 pages)",
-          "20 professional prints (5x7)",
-          "1 canvas print (16x20)"
-        ]
-      }
-    ],
-    "portrait-videography": [
-      {
-        id: "basic",
-        name: "Essential",
+        id: "portrait-c",
+        name: "Portrait Package C",
         price: 399,
-        description: "Basic video portrait session",
-        features: [
-          "1 hour session at one location",
-          "1-2 minute highlight video",
-          "Digital delivery of final video",
-          "Basic color grading",
-          "Licensed music"
-        ]
-      },
-      {
-        id: "standard",
-        name: "Classic",
-        price: 599,
-        description: "Comprehensive video portrait session",
-        features: [
-          "2 hour session at one location",
-          "2-3 minute highlight video",
-          "Digital delivery of final video",
-          "Professional color grading",
-          "Licensed music",
-          "Basic interview footage (optional)",
-          "1 round of revisions"
-        ]
-      },
-      {
-        id: "premium",
-        name: "Luxury",
-        price: 899,
-        description: "Premium video portrait experience",
-        features: [
-          "3 hour session at two locations",
-          "3-5 minute cinematic video",
-          "Digital delivery of final video",
-          "Premium color grading",
-          "Custom licensed music",
-          "Professional interview footage (optional)",
-          "Drone footage (weather permitting)",
-          "2 rounds of revisions",
-          "Custom USB with final video"
-        ]
+        description: "Portrait Package C.",
+        features: ["Up to 3 Hr session", "3 Locations", "3 Outfit Changes", "Minimum of 15 Detailed Photos", "All candids with access to cloud folder", "Highlight reel", "Retainer: $175"]
       }
     ],
-    "portrait-both": [
+    "sports-photography": [
       {
-        id: "basic",
-        name: "Essential",
-        price: 599,
-        description: "Basic photo and video portrait session",
-        features: [
-          "1 hour session at one location",
-          "1 outfit change",
-          "Online gallery with 20+ edited photos",
-          "1-2 minute highlight video",
-          "Digital download of 10 images",
-          "Digital delivery of final video",
-          "Print release for purchased images",
-          "Basic color grading",
-          "Licensed music"
-        ]
+        id: "sports-a",
+        name: "Sports Package A",
+        price: 20,
+        description: "Sports Package A.",
+        features: ["Digital link to download", "Includes collage of 2 team pictures & individual", "Individual solo pictures"]
       },
       {
-        id: "standard",
-        name: "Classic",
-        price: 899,
-        description: "Comprehensive photo and video portrait session",
-        features: [
-          "2 hour session at one location",
-          "2-3 outfit changes",
-          "Online gallery with 40+ edited photos",
-          "2-3 minute highlight video",
-          "Digital download of all images",
-          "Digital delivery of final video",
-          "Print release for all images",
-          "Professional color grading",
-          "Licensed music",
-          "Basic interview footage (optional)",
-          "10 professional prints (5x7)",
-          "1 round of revisions"
-        ]
-      },
-      {
-        id: "premium",
-        name: "Luxury",
-        price: 1499,
-        description: "Premium photo and video portrait experience",
-        features: [
-          "3 hour session at two locations",
-          "Unlimited outfit changes",
-          "Online gallery with 60+ edited photos",
-          "3-5 minute cinematic video",
-          "Digital download of all images",
-          "Digital delivery of final video",
-          "Print release for all images",
-          "Professional hair and makeup",
-          "Premium color grading",
-          "Custom licensed music",
-          "Professional interview footage (optional)",
-          "Drone footage (weather permitting)",
-          "Custom photo album (20 pages)",
-          "20 professional prints (5x7)",
-          "1 canvas print (16x20)",
-          "2 rounds of revisions",
-          "Custom USB with all content"
-        ]
+        id: "sports-b",
+        name: "Sports Package B",
+        price: 25,
+        description: "Sports Package B.",
+        features: ["8x10 Collage print", "5x7 individual picture print"]
       }
     ]
   },
@@ -709,270 +403,151 @@ const packageData = {
         id: "extra-time-photo",
         name: "Extra Hour of Coverage",
         price: 199,
-        description: "Add an additional hour of photography coverage",
+        description: "Add an additional hour of photography coverage.",
         category: "Time"
       },
       {
         id: "second-photographer",
         name: "Second Photographer",
         price: 399,
-        description: "Add a second professional photographer for your event",
+        description: "Add a second professional photographer (if not already included in your selected package).",
         category: "Personnel"
       },
       {
         id: "engagement-session",
         name: "Engagement Session",
         price: 299,
-        description: "1-hour engagement photo session prior to your wedding day",
+        description: "1-hour engagement photo session, can be added if not part of the main package.",
         category: "Sessions"
       },
       {
-        id: "bridal-session",
-        name: "Bridal Session",
-        price: 299,
-        description: "1-hour bridal portrait session prior to your wedding day",
-        category: "Sessions"
-      },
-      {
-        id: "boudoir-session",
-        name: "Boudoir Session",
-        price: 349,
-        description: "1-hour private boudoir photo session",
-        category: "Sessions"
-      },
-      {
-        id: "photo-album",
-        name: "Custom Photo Album",
-        price: 499,
-        description: "Premium 40-page custom designed photo album",
-        category: "Products"
-      },
-      {
-        id: "mini-album",
+        id: "photo-album-mini",
         name: "Mini Photo Album",
         price: 299,
-        description: "20-page custom designed photo album",
+        description: "20-page custom designed photo album.",
         category: "Products"
       },
       {
-        id: "parent-album",
-        name: "Parent Albums (Set of 2)",
-        price: 399,
-        description: "Two duplicate 20-page albums for parents",
+        id: "badge-tags",
+        name: "Badge Tags (1)",
+        price: 15,
+        description: "Custom photo badge tag.",
         category: "Products"
       },
       {
-        id: "canvas-print",
-        name: "Canvas Print (16x20)",
-        price: 199,
-        description: "Gallery-quality canvas print of your favorite image",
-        category: "Products"
-      },
-      {
-        id: "prints-package",
-        name: "Professional Prints Package",
+        id: "raw-photo-files",
+        name: "Raw Photo Files",
         price: 249,
-        description: "Set of 25 professional prints in various sizes",
-        category: "Products"
-      },
-      {
-        id: "thank-you-cards",
-        name: "Custom Thank You Cards",
-        price: 199,
-        description: "Set of 50 custom thank you cards with envelopes",
-        category: "Products"
-      },
-      {
-        id: "digital-images",
-        name: "Additional Digital Images",
-        price: 149,
-        description: "10 additional fully edited digital images",
+        description: "Access to all unedited RAW photo files.",
         category: "Digital"
       },
       {
-        id: "rush-delivery",
-        name: "Rush Delivery",
+        id: "rush-delivery-photo",
+        name: "Rush Photo Delivery",
         price: 199,
-        description: "Expedited delivery of your photos within 1 week",
+        description: "Expedited delivery of your photos.",
         category: "Services"
       },
       {
-        id: "hair-makeup",
-        name: "Professional Hair & Makeup",
-        price: 249,
-        description: "Professional hair styling and makeup application",
-        category: "Services"
+        id: "print-value",
+        name: "VALUE Print Package",
+        price: 65,
+        description: "2-8x10, 4-5x7, 4-4x5, 24-Wallets, Online Access",
+        category: "Prints"
+      },
+      {
+        id: "print-a",
+        name: "Print Package A",
+        price: 50,
+        description: "1-8x10, 2-5x7, 2-4x5, 16-Wallets, Online Access",
+        category: "Prints"
+      },
+      {
+        id: "print-b",
+        name: "Print Package B",
+        price: 35,
+        description: "1-8x10, 2-5x7, 12-Wallets, Online Access",
+        category: "Prints"
+      },
+      {
+        id: "print-c",
+        name: "Print Package C",
+        price: 25,
+        description: "1-5x7, 2-4x5, 8-Wallets, Online Access",
+        category: "Prints"
+      },
+      {
+        id: "print-digital",
+        name: "NO PRINT (Digital Only)",
+        price: 20,
+        description: "Receive digital files only (if not already included or for additional sets).",
+        category: "Prints"
       }
     ],
     videography: [
       {
         id: "extra-time-video",
-        name: "Extra Hour of Coverage",
+        name: "Extra Hour of Video Coverage",
         price: 249,
-        description: "Add an additional hour of videography coverage",
+        description: "Add an additional hour of videography coverage.",
         category: "Time"
       },
       {
         id: "second-videographer",
         name: "Second Videographer",
         price: 499,
-        description: "Add a second professional videographer for your event",
+        description: "Add a second professional videographer (if not already included in your selected package).",
         category: "Personnel"
       },
       {
         id: "drone-footage",
         name: "Drone Aerial Footage",
         price: 299,
-        description: "Cinematic aerial footage of your venue and event (weather permitting)",
+        description: "Cinematic aerial footage (if not already included in your selected package).",
         category: "Equipment"
       },
       {
-        id: "raw-footage",
-        name: "Raw Footage",
-        price: 299,
-        description: "All unedited footage from your event",
-        category: "Digital"
-      },
-      {
-        id: "extended-highlight",
-        name: "Extended Highlight Film",
+        id: "raw-video-files",
+        name: "Raw Video Footage",
         price: 349,
-        description: "Extend your highlight film by 5-7 minutes",
+        description: "All unedited video footage from your event.",
         category: "Digital"
-      },
-      {
-        id: "documentary-edit",
-        name: "Documentary Edit",
-        price: 499,
-        description: "Full-length documentary style edit of your entire event",
-        category: "Digital"
-      },
-      {
-        id: "same-day-edit",
-        name: "Same-Day Edit",
-        price: 599,
-        description: "3-5 minute highlight film delivered same day for reception viewing",
-        category: "Services"
       },
       {
         id: "social-media-teaser",
         name: "Social Media Teaser",
         price: 199,
-        description: "60-second teaser video for social media sharing",
+        description: "60-second teaser video for social media.",
         category: "Digital"
       },
       {
-        id: "custom-music-licensing",
-        name: "Custom Music Licensing",
-        price: 199,
-        description: "License a specific song of your choice for your video",
-        category: "Services"
-      },
-      {
-        id: "video-booth",
-        name: "Video Guest Book",
-        price: 399,
-        description: "Video booth setup for guests to leave messages",
-        category: "Equipment"
-      },
-      {
-        id: "livestream",
-        name: "Event Livestreaming",
-        price: 499,
-        description: "Professional livestream of your event for remote guests",
-        category: "Services"
-      },
-      {
-        id: "additional-revision",
-        name: "Additional Revision Round",
-        price: 149,
-        description: "Additional round of revisions beyond package inclusion",
-        category: "Services"
-      },
-      {
-        id: "video-rush-delivery",
-        name: "Rush Delivery",
+        id: "rush-delivery-video",
+        name: "Rush Video Delivery",
         price: 299,
-        description: "Expedited delivery of your videos within 2 weeks",
+        description: "Expedited delivery of your videos.",
         category: "Services"
-      },
-      {
-        id: "usb-delivery",
-        name: "Custom USB Delivery",
-        price: 149,
-        description: "Custom USB in wooden box with all your videos",
-        category: "Products"
       }
     ],
     both: [
       {
         id: "extra-time-both",
-        name: "Extra Hour of Coverage",
+        name: "Extra Hour of Photo & Video Coverage",
         price: 349,
-        description: "Add an additional hour of photo & video coverage",
+        description: "Add an additional hour of combined photo and video coverage.",
         category: "Time"
-      },
-      {
-        id: "additional-photographer",
-        name: "Additional Photographer",
-        price: 399,
-        description: "Add an additional professional photographer",
-        category: "Personnel"
-      },
-      {
-        id: "additional-videographer",
-        name: "Additional Videographer",
-        price: 499,
-        description: "Add an additional professional videographer",
-        category: "Personnel"
-      },
-      {
-        id: "engagement-photo-video",
-        name: "Engagement Photo & Video Session",
-        price: 599,
-        description: "2-hour engagement session with photo and video coverage",
-        category: "Sessions"
-      },
-      {
-        id: "complete-package",
-        name: "Complete Digital Package",
-        price: 799,
-        description: "All digital photos and videos with extended edits and raw files",
-        category: "Digital"
-      },
-      {
-        id: "premium-album-video",
-        name: "Premium Album & Video Box Set",
-        price: 899,
-        description: "Luxury 40-page album and custom video presentation in gift box",
-        category: "Products"
-      },
-      {
-        id: "destination-travel",
-        name: "Destination Travel Fee",
-        price: 999,
-        description: "Coverage for destinations requiring overnight travel",
-        category: "Services"
       },
       {
         id: "rehearsal-coverage",
         name: "Rehearsal Dinner Coverage",
         price: 699,
-        description: "2 hours of photo and video coverage of your rehearsal dinner",
+        description: "2 hours of photo and video coverage of your rehearsal dinner.",
         category: "Services"
       },
       {
-        id: "photo-video-booth",
-        name: "Photo & Video Booth",
-        price: 799,
-        description: "Interactive booth with instant prints and video messages",
-        category: "Equipment"
-      },
-      {
-        id: "complete-rush",
-        name: "Complete Rush Delivery",
+        id: "complete-rush-delivery",
+        name: "Complete Rush Delivery (Photo & Video)",
         price: 499,
-        description: "Expedited delivery of all photo and video content",
+        description: "Expedited delivery of all photo and video content.",
         category: "Services"
       }
     ]
@@ -1068,8 +643,14 @@ function initializeServiceTypes() {
   
   // Update the event name in the UI
   document.getElementById('selected-event-name').textContent = selectedEventType.name;
+
+  let availableServiceTypes = packageData.serviceTypes;
+
+  if (selectedEventType && (selectedEventType.id === "portrait" || selectedEventType.id === "sports")) {
+    availableServiceTypes = packageData.serviceTypes.filter(service => service.id === "photography");
+  }
   
-  packageData.serviceTypes.forEach(serviceType => {
+  availableServiceTypes.forEach(serviceType => {
     const card = createSelectionCard(serviceType, selectServiceType);
     serviceTypeGrid.appendChild(card);
   });
@@ -1633,6 +1214,78 @@ function setupFormSubmission() {
   
   bookingForm.addEventListener('submit', function(e) {
     e.preventDefault();
+
+    // Gather Form Data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const eventDate = document.getElementById('event-date').value;
+    const message = document.getElementById('message').value;
+
+    // Gather Package Details
+    let emailBody = "New Booking Request:\n\n";
+
+    emailBody += `Customer Name: ${name}\n`;
+    emailBody += `Customer Email: ${email}\n`;
+    emailBody += `Customer Phone: ${phone}\n`;
+    emailBody += `Event Date: ${eventDate}\n`;
+    emailBody += `Additional Information: ${message}\n\n`;
+
+    emailBody += "--- Package Details ---\n";
+
+    if (selectedEventType && selectedEventType.name) {
+      emailBody += `Event Type: ${selectedEventType.name}\n`;
+    } else {
+      emailBody += "Event Type: Not selected\n";
+    }
+
+    if (selectedServiceType && selectedServiceType.name) {
+      emailBody += `Service Type: ${selectedServiceType.name}\n`;
+    } else {
+      emailBody += "Service Type: Not selected\n";
+    }
+
+    let basePrice = 0;
+    if (selectedPackage && selectedPackage.name && typeof selectedPackage.price !== 'undefined') {
+      basePrice = selectedPackage.price;
+      emailBody += `Base Package: ${selectedPackage.name} - $${selectedPackage.price}\n`;
+      if (selectedPackage.features && Array.isArray(selectedPackage.features)) {
+        emailBody += "Features:\n";
+        selectedPackage.features.forEach(feature => {
+          emailBody += `  - ${feature}\n`;
+        });
+      }
+    } else {
+      emailBody += "Base Package: Not selected\n";
+    }
+    emailBody += "\n";
+
+    emailBody += "Add-Ons:\n";
+    let addOnsTotalPrice = 0;
+    if (selectedAddOns && Array.isArray(selectedAddOns) && selectedAddOns.length > 0) {
+      selectedAddOns.forEach(addon => {
+        if (addon && addon.name && typeof addon.price !== 'undefined') {
+          emailBody += `  - ${addon.name} - $${addon.price}\n`;
+          addOnsTotalPrice += addon.price;
+        }
+      });
+    } else {
+      emailBody += "  No add-ons selected.\n";
+    }
+    emailBody += "\n";
+
+    emailBody += "--- Total Price ---\n";
+    const totalPrice = basePrice + addOnsTotalPrice;
+    emailBody += `Total: $${totalPrice}\n\n`;
+
+    // Construct mailto link
+    const recipientEmail = "getmonieproductions@gmail.com";
+    const subject = "New Package Booking Request";
+    const encodedBody = encodeURIComponent(emailBody);
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodedBody}`;
+
+    // Open mailto link
+    window.location.href = mailtoLink;
     
     // In a real application, you would send this data to a server
     alert('Thank you for your booking request! We will contact you shortly to confirm your package details.');
