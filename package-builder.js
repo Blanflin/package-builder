@@ -6,25 +6,25 @@ const packageData = {
       id: "wedding",
       name: "Wedding",
       description: "Capture every moment of your special day",
-      imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/464ps_nOflw/download?w=1350&q=80"
     },
     {
       id: "small-event",
       name: "Small Event",
       description: "Perfect for birthdays, parties, and gatherings",
-      imageUrl: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/Iy6sv_rxZHM/download?w=1350&q=80"
     },
     {
       id: "production",
       name: "Production",
       description: "Commercial, product, and promotional content",
-      imageUrl: "https://images.unsplash.com/photo-1574717024453-354056afd6fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/aS4Duj2j7r4/download?w=1350&q=80"
     },
     {
       id: "portrait",
       name: "Portrait Session",
       description: "Individual or family portrait photography",
-      imageUrl: "https://images.unsplash.com/photo-1542103749-8ef59b94f47e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/EJNwK3IH6GM/download?w=1350&q=80"
     }
   ],
   serviceTypes: [
@@ -32,19 +32,19 @@ const packageData = {
       id: "photography",
       name: "Photography",
       description: "Professional photography services",
-      imageUrl: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/qWYvQMIJyfE/download?w=1350&q=80"
     },
     {
       id: "videography",
       name: "Videography",
       description: "Professional videography services",
-      imageUrl: "https://images.unsplash.com/photo-1569317002804-ab77bcf1bce4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/kbd1oAf-9Ms/download?w=1350&q=80"
     },
     {
       id: "both",
       name: "Photography & Videography",
       description: "Combined professional services",
-      imageUrl: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+      imageUrl: "https://unsplash.com/photos/Z0KPxMRTxp4/download?w=1350&q=80"
     }
   ],
   packages: {
@@ -990,7 +990,54 @@ let viewMode = 'card';
 // Initialize the builder when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
   initializeEventTypes();
-  setupFormSubmission();
+  setupFormSubmission(); // Sets up the main package booking form
+
+  // Logic for the Individual Photo Request form
+  const photoRequestForm = document.getElementById('photo-request-form');
+  if (photoRequestForm) {
+    const numPeopleInput = document.getElementById('request_num_people');
+    const priceDisplaySpan = document.getElementById('displayed_photo_price');
+    
+    // Ensure the hidden input for calculated price exists or create it
+    let calculatedPriceInput = document.getElementById('request_calculated_price');
+    if (!calculatedPriceInput) {
+      calculatedPriceInput = document.createElement('input');
+      calculatedPriceInput.type = 'hidden';
+      calculatedPriceInput.name = 'calculated_photo_price'; // Name for Formspree
+      calculatedPriceInput.id = 'request_calculated_price';
+      photoRequestForm.appendChild(calculatedPriceInput);
+    }
+
+    function updatePhotoRequestPrice() {
+      const numPeople = parseInt(numPeopleInput.value, 10);
+      let price = 0;
+      let priceText = "$0.00";
+
+      if (isNaN(numPeople) || numPeople < 1) {
+        price = 0;
+        priceText = "$0.00";
+      } else if (numPeople === 1) {
+        price = 10;
+        priceText = "$10.00";
+      } else { // 2 or more people
+        price = 20;
+        priceText = "$20.00";
+      }
+
+      if (priceDisplaySpan) {
+        priceDisplaySpan.textContent = priceText;
+      }
+      if (calculatedPriceInput) {
+        calculatedPriceInput.value = price;
+      }
+    }
+
+    if (numPeopleInput) {
+      numPeopleInput.addEventListener('input', updatePhotoRequestPrice);
+      // Initial price calculation on page load
+      updatePhotoRequestPrice(); 
+    }
+  }
 });
 
 // Function to scroll to the package builder section
@@ -1632,13 +1679,31 @@ function setupFormSubmission() {
   const bookingForm = document.getElementById('booking-form');
   
   bookingForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    // Populate hidden fields before the form submits
+    if (selectedEventType) {
+      document.querySelector('input[name="selected_event_type"]').value = selectedEventType.name;
+    }
+    if (selectedServiceType) {
+      document.querySelector('input[name="selected_service_type"]').value = selectedServiceType.name;
+    }
+    if (selectedPackage) {
+      document.querySelector('input[name="selected_package_name"]').value = selectedPackage.name;
+      document.querySelector('input[name="selected_package_price"]').value = selectedPackage.price;
+    }
     
-    // In a real application, you would send this data to a server
-    alert('Thank you for your booking request! We will contact you shortly to confirm your package details.');
+    const addOnsSummary = selectedAddOns.map(addon => `${addon.name} ($${addon.price})`).join(', ');
+    document.querySelector('input[name="selected_add_ons"]').value = addOnsSummary;
     
-    // Reset the form
-    bookingForm.reset();
+    const basePrice = selectedPackage ? selectedPackage.price : 0;
+    const addOnsTotal = selectedAddOns.reduce((sum, addon) => sum + addon.price, 0);
+    const total = basePrice + addOnsTotal;
+    document.querySelector('input[name="total_price"]').value = total;
+    
+    // The form will now submit to Formspree with the hidden fields populated.
+    // No e.preventDefault() is called, allowing natural form submission.
+    // Optionally, you can add a small delay or a confirmation message before actual submission if desired,
+    // but for Formspree, direct submission after populating fields is usually fine.
+    // For example, could add a brief "Submitting..." message or disable the button here.
   });
 }
 
