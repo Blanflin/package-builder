@@ -78,15 +78,15 @@ const packageData = {
   ],
   "portrait-photography": [
     {
-      id: "a_1hr", name: "A (1HR PKG)", price: 249, retainer: 75, description: "1 hour portrait session.",
+      id: "a_1hr", name: "A (1HR PKG)", price: 150, retainer: 75, description: "1 hour portrait session.",
       features: ["Up to 1 Hr coverage", "1 Location", "1 Outfit Change", "(Minimum of) 5 Detailed Photos", "20 candids with access to cloud folder", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
     },
     {
-      id: "b_2hr", name: "B (2HR PKG)", price: 339, retainer: 125, description: "2 hour portrait session.",
+      id: "b_2hr", name: "B (2HR PKG)", price: 250, retainer: 125, description: "2 hour portrait session.",
       features: ["Up to 2 Hr coverage", "2 Locations", "2 Outfit Changes", "(Minimum of) 10 Detailed Photos", "all candids with access to cloud folder", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
     },
     {
-      id: "c_3hr", name: "C (3HR PKG)", price: 399, retainer: 175, description: "3 hour portrait session with highlight reel.",
+      id: "c_3hr", name: "C (3HR PKG)", price: 325, retainer: 175, description: "3 hour portrait session with highlight reel.",
       features: ["Up to 3 Hr coverage", "3 Locations", "3 Outfit Changes", "(Minimum of) 15 Detailed Photos", "all candids with access to cloud folder", "highlight reel", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
     }
   ],
