@@ -76,6 +76,20 @@ const packageData = {
       features: ["Digital Only", "Online Access", "All packages include 1 - 8x10 Team Composite", "Edits can take 2 wks to a month to finish in total."]
     }
   ],
+  "small-event-photography": [
+    {
+      id: "a_1hr", name: "A (1HR PKG)", price: 150, retainer: 75, description: "1 hour portrait session.",
+      features: ["Up to 1 Hr coverage", "1 Location", "1 Outfit Change", "(Minimum of) 5 Detailed Photos", "20 candids with access to cloud folder", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
+    },
+    {
+      id: "b_2hr", name: "B (2HR PKG)", price: 250, retainer: 125, description: "2 hour portrait session.",
+      features: ["Up to 2 Hr coverage", "2 Locations", "2 Outfit Changes", "(Minimum of) 10 Detailed Photos", "all candids with access to cloud folder", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
+    },
+    {
+      id: "c_3hr", name: "C (3HR PKG)", price: 325, retainer: 175, description: "3 hour portrait session with highlight reel.",
+      features: ["Up to 3 Hr coverage", "3 Locations", "3 Outfit Changes", "(Minimum of) 15 Detailed Photos", "all candids with access to cloud folder", "highlight reel", "Edits can take 2 wks or more.", "Additional photos may be purchased: $10/standard edits, $20/high quality edits.", "Retainer/Total includes cost of extra EQ."]
+    }
+  ],
   "portrait-photography": [
     {
       id: "a_1hr", name: "A (1HR PKG)", price: 150, retainer: 75, description: "1 hour portrait session.",
@@ -192,8 +206,56 @@ const packageData = {
       features: ["3 Hr coverage", "2 locations", "Consultation", "1 Camera", "1 Camera Man", "Drone Footage", "5 min Highlight Video", "Remaining balance is due by date of service or may pay in full prior to session date."]
     },
     {
-      id: "sm_event_video_d", name: "D", price: 800, retainer: 400, description: "6-8hr small event video with drone.",
+      id: "sm_event_video_c", name: "C", price: 800, retainer: 400, description: "6-8hr small event video with drone.",
       features: ["6+ (up to 8) Hr coverage", "multiple locations as needed", "Consultation", "2 Cameras", "1 Camera Man", "Drone Footage", "10-15 min Video", "Retainer/Total includes cost of extra EQ."]
+    }
+  ],
+  "small-event-both": [
+    {
+      id: "sm_bundle_a",
+      name: "Small Event Bundle A",
+      price: 300,
+      retainer: 175,
+      description: "1hr combined photo and video coverage for your small event.",
+      features: [
+        "Photo: Up to 1 Hr coverage, 1 Location, 1 Outfit Change, (Minimum of) 5 Detailed Photos, 20 candids with access to cloud folder",
+        "Video: 1 Hr coverage, 1 location, 1 Camera Man, 1-2 Min Highlight Video",
+        "Consultation included",
+        "Edits for photos can take 2 wks or more.",
+        "Edits for video can take 2 wks to a month.",
+        "Deposits are due at time of booking to secure slot and are non-refundable (for video portion).",
+        "A 24hr notice is required for rescheduling or will result in deposit forfeiture (for video portion).",
+        "Photo Retainer/Total includes cost of extra EQ."
+      ]
+    },
+    {
+      id: "sm_bundle_b",
+      name: "Small Event Bundle B",
+      price: 800,
+      retainer: 325,
+      description: "3hr combined photo and video coverage for your small event, including drone footage.",
+      features: [
+        "Photo: Up to 2 Hr coverage, 2 Locations, 2 Outfit Changes, (Minimum of) 10 Detailed Photos, all candids with access to cloud folder",
+        "Video: 3 Hr coverage, 2 locations, 1 Camera, 1 Camera Man, Drone Footage, 5 min Highlight Video",
+        "Consultation included",
+        "Edits for photos can take 2 wks or more.",
+        "Remaining balance is due by date of service or may pay in full prior to session date (for video portion).",
+        "Photo Retainer/Total includes cost of extra EQ."
+      ]
+    },
+    {
+      id: "sm_bundle_c",
+      name: "Small Event Bundle C",
+      price: 1500,
+      retainer: 575,
+      description: "Extensive 6-8hr combined photo and video coverage for your small event, including drone footage.",
+      features: [
+        "Photo: Up to 3 Hr coverage, 3 Locations, 3 Outfit Changes, (Minimum of) 15 Detailed Photos, all candids with access to cloud folder, photo highlight reel",
+        "Video: 6+ (up to 8) Hr coverage, multiple locations as needed, 2 Cameras, 1 Camera Man, Drone Footage, 10-15 min Video",
+        "Consultation included",
+        "Edits for photos can take 2 wks or more.",
+        "Retainer/Total includes cost of extra EQ (for photo & video components)."
+      ]
     }
   ]
 },
@@ -556,6 +618,25 @@ function initializePackages() {
   // Update the title in the UI
   document.getElementById('event-service-title').textContent = `${selectedEventType.name} ${selectedServiceType.name}`;
   
+  const packageCardsView = document.getElementById('package-cards-view');
+  const packageComparisonView = document.getElementById('package-comparison-view');
+  const viewToggle = document.querySelector('.view-toggle');
+
+  if (!packages || packages.length === 0) {
+    const message = '<p class="no-packages-message">No packages are currently available for this specific combination of event and service. Please contact us for a custom quote or further assistance.</p>';
+    packageCardsView.innerHTML = message;
+    packageComparisonView.innerHTML = ''; // Clear comparison view
+    if (viewToggle) {
+      viewToggle.style.display = 'none'; // Hide view toggle buttons
+    }
+    return; // Stop further processing
+  }
+
+  // If packages are available, ensure view toggle is visible
+  if (viewToggle) {
+    viewToggle.style.display = 'flex'; // Or 'block' or its original display style
+  }
+
   // Initialize both views
   initializePackageCardsView(packages);
   initializePackageComparisonView(packages);
@@ -871,7 +952,7 @@ function initializeAddOnCategories() {
 
   // Conditional Add-On Logic
   if (selectedEventType && selectedServiceType) {
-    if (selectedEventType.id === "portrait" && selectedServiceType.id === "photography") {
+    if ((selectedEventType.id === "portrait" || selectedEventType.id === "small-event") && selectedServiceType.id === "photography") {
       const portraitAddOns = (packageData.addOns.photography || []).filter(addon => addon.category === "Print Packages Addon");
       effectiveAddOns = effectiveAddOns.concat(portraitAddOns);
     }
@@ -922,7 +1003,7 @@ function displayAddOnsByCategory(category) {
   );
 
   if (selectedEventType && selectedServiceType) {
-    if (selectedEventType.id === "portrait" && selectedServiceType.id === "photography") {
+    if ((selectedEventType.id === "portrait" || selectedEventType.id === "small-event") && selectedServiceType.id === "photography") {
       effectiveAddOnsForDisplay = effectiveAddOnsForDisplay.concat(
         (packageData.addOns.photography || []).filter(addon => addon.category === "Print Packages Addon")
       );
