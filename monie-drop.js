@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreValueElement = document.getElementById('scoreValue');
     const highScoreValueElement = document.getElementById('highScoreValue');
     const startGameBtn = document.getElementById('startGameBtn');
+    // Touch control buttons
+    const touchLeftBtn = document.getElementById('touchLeftBtn');
+    const touchRightBtn = document.getElementById('touchRightBtn');
+    const touchRotateBtn = document.getElementById('touchRotateBtn');
+    const touchDownBtn = document.getElementById('touchDownBtn');
+
 
     // Game constants
     const COLS = 10;
@@ -34,42 +40,132 @@ document.addEventListener('DOMContentLoaded', () => {
     let isGameOver = false;
 
     // --- GM Logo Tetrominoes ("Monie-minos") ---
+    // Pivot point for rotation is [0,0] of the first rotation's shape array.
     const MONIE_MINOS = {
-        'GM_G_Shape': [ // G-like shape - simplified
-            [ [[0,0],[0,1], [1,0], [2,0],[2,1],[2,2]] ], // Rotation 1
-            [ [[0,0],[1,0],[2,0], [0,1], [0,2],[2,2]] ], // Rotation 2
-            [ [[0,0],[0,1],[0,2], [1,2], [2,1],[2,2]] ], // Rotation 3
-            [ [[0,0], [2,0],[2,1], [0,2],[1,2],[2,2]] ]  // Rotation 4
+        'Classic_GM': [
+            // Rotation 0: As per text drawing
+            // XX.X.X  (0,0), (0,1), (0,3), (0,5)
+            // X..X.X  (1,0), (1,3), (1,5)
+            // XXX.X.  (2,0), (2,1), (2,2), (2,4)
+            // X.X...  (3,0), (3,2)
+            [
+                [[0,0],[0,1],       [0,3],       [0,5]],
+                [[1,0],             [1,3],       [1,5]],
+                [[2,0],[2,1],[2,2], [2,4]            ],
+                [[3,0],       [3,2]                  ]
+            ],
+            // Rotation 1: (Classic_GM rotated 90 degrees right - conceptual)
+            // X.X.X
+            // .XX.X
+            // X.X.X
+            // X.X.X
+            // .X.X
+            // .X.X
+            [
+                [[0,0],[0,2],[0,4]],
+                [[1,1],[1,2],[1,4]],
+                [[2,0],[2,2],[2,4]],
+                [[3,0],[3,2],[3,4]],
+                [[4,1],[4,3]],
+                [[5,1],[5,3]]
+            ]
+            // Add more rotations if desired, can be complex
         ],
-        'GM_M_Shape': [ // M-like shape (simplified)
-            [ [[0,0],[0,2], [1,0],[1,1],[1,2], [2,0],[2,2]] ], // Rotation 1
-            [ [[0,0],[0,1], [1,1],[1,2], [2,0],[2,1]] ]      // Rotation 2
+        'G_Only': [
+            // Rotation 0:
+            // XXX
+            // X..
+            // X.X
+            // XXX
+            [
+                [[0,0],[0,1],[0,2]],
+                [[1,0]            ],
+                [[2,0],       [2,2]],
+                [[3,0],[3,1],[3,2]]
+            ],
+            // Rotation 1 (90 deg right):
+            // XXXX
+            // X.X.
+            // X...
+            [
+                [[0,0],[0,1],[0,2],[0,3]],
+                [[1,0],[1,2]            ],
+                [[2,0]                  ]
+            ],
+            // Rotation 2 (180 deg):
+            // XXX
+            // X.X
+            // ..X
+            // XXX
+             [
+                [[0,0],[0,1],[0,2]],
+                [[1,0],       [1,2]],
+                [            ,[2,2]],
+                [[3,0],[3,1],[3,2]]
+            ],
+            // Rotation 3 (270 deg right):
+            // ...X
+            // .X.X
+            // XXXX
+            [
+                [[0,3]                  ],
+                [[1,1],[1,3]            ],
+                [[2,0],[2,1],[2,2],[2,3]]
+            ]
         ],
-        'GM_Bar': [ // Simple Bar (like Tetris I)
+        'Heavy_3D': [ // Chunky, squarish G-like or C-like shape
+                     // Trying a thick C shape for "heavy" feel
+            // XXX
+            // X
+            // X
+            // XXX
+            [
+                [[0,0],[0,1],[0,2]],
+                [[1,0]            ],
+                [[2,0]            ],
+                [[3,0],[3,1],[3,2]]
+            ],
+            // Rotation 1:
+            // X.XX
+            // XXXX
+            [
+                [[0,0],       [0,2],[0,3]],
+                [[1,0],[1,1],[1,2],[1,3]]
+            ],
+             // Rotation 2:
+            // XXX
+            //   X
+            //   X
+            // XXX
+            [
+                [[0,0],[0,1],[0,2]],
+                [            ,[1,2]],
+                [            ,[2,2]],
+                [[3,0],[3,1],[3,2]]
+            ],
+            // Rotation 3:
+            // XXXX
+            // XX.X
+            [
+                [[0,0],[0,1],[0,2],[0,3]],
+                [[1,0],[1,1],       [1,3]]
+            ]
+        ],
+        'GM_Bar': [ // Simple Bar (like Tetris I) - Retaining for variety
             [ [[0,0], [1,0], [2,0], [3,0]] ], // Vertical
             [ [[0,0], [0,1], [0,2], [0,3]] ]  // Horizontal
         ],
-        'GM_Square': [ // 2x2 Square
+        'GM_Square': [ // 2x2 Square - Retaining
             [ [[0,0], [0,1], [1,0], [1,1]] ]
         ],
+        // Standard L, J, T shapes can also be retained or removed if GM logos are preferred
         'GM_L_Shape': [
             [ [[0,0], [1,0], [2,0], [2,1]] ],
             [ [[0,0], [0,1], [0,2], [1,0]] ],
-            [ [[0,1], [1,1], [2,1], [0,0]] ], // Adjusted from typical L for variety if needed
-            [ [[2,0], [2,1], [2,2], [1,2]] ]  // Adjusted
-        ],
-        'GM_J_Shape': [ // Mirrored L
-            [ [[0,1], [1,1], [2,1], [2,0]] ],
-            [ [[0,0], [1,0], [1,1], [1,2]] ],
-            [ [[0,0], [0,1], [1,1], [2,1]] ], // Adjusted
-            [ [[0,0], [0,1], [0,2], [1,2]] ]
-        ],
-        'GM_T_Shape': [
-            [ [[0,0],[0,1],[0,2], [1,1]] ],
-            [ [[0,1],[1,0],[1,1], [2,1]] ],
-            [ [[1,0],[1,1],[1,2], [0,1]] ],
-            [ [[0,0],[1,0],[1,1], [2,0]] ]
+            [ [[0,1], [1,1], [2,1], [0,0]] ],
+            [ [[2,0], [2,1], [2,2], [1,2]] ]
         ]
+        // Not including J and T for now to give more prominence to new GM shapes
     };
     const PIECE_COLORS = ['#D4AF37', '#C0C0C0', '#FFD700', '#E5E4E2', '#B08D57', '#A9A9A9', '#F4A460', '#CD7F32'];
 
@@ -96,7 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
             effect: 'bonusPoints'
         }
     };
-    const EMOJI_SPAWN_RATE = 0.15; // 15% chance to spawn an emoji block instead of a Monie-mino
+    const EMOJI_SPAWN_RATE = 0.15; // 15% chance to spawn an emoji block
+    const CANDY_DROP_SPAWN_RATE = 0.05; // 5% chance for a Candy Drop piece (on top of regular piece spawns)
+
+    // --- Candy Drop specific visuals ---
+    const CANDY_COLORS = ['#FF69B4', '#00FFFF', '#7FFF00', '#FFD700', '#FF8C00']; // HotPink, Aqua, Chartreuse, Gold, DarkOrange
+    const CANDY_EMOJIS = ['🍬', '🍭', '🍫', '🍩', '🍦'];
+
 
     function createBoard() {
         return Array.from({ length: ROWS }, () => Array(COLS).fill(EMPTY_COLOR));
@@ -132,7 +234,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 x: Math.floor(Math.random() * COLS), // Spawn emoji anywhere in a column
                 y: 0
             };
-        } else {
+        } else if (Math.random() < CANDY_DROP_SPAWN_RATE && MONIE_MINOS['Classic_GM']) {
+            // Spawn a Candy Drop piece (uses Classic_GM shape)
+            const pieceRotations = MONIE_MINOS['Classic_GM'];
+            // For Candy Drop, we'll make each block a different candy color
+            // This requires a more complex piece structure or drawing logic.
+            // For now, let's give the piece a general "candy" type and a base candy color.
+            // The multi-color block effect will be handled in drawPiece.
+            return {
+                shape: pieceRotations[0], // Or a random rotation
+                rotations: pieceRotations,
+                rotationIndex: 0,
+                color: CANDY_COLORS[Math.floor(Math.random() * CANDY_COLORS.length)], // A base color for the piece
+                isCandyDrop: true, // Special flag
+                isEmoji: false, // Not a 1x1 emoji block, but special
+                effect: 'candyExplosion', // Effect name
+                x: Math.floor(COLS / 2) - Math.floor(Math.max(...pieceRotations[0].map(p => p[1])) / 2),
+                y: 0
+            };
+        }
+        else { // Regular Monie-Mino
             const pieceNames = Object.keys(MONIE_MINOS);
             const randomPieceName = pieceNames[Math.floor(Math.random() * pieceNames.length)];
             const pieceRotations = MONIE_MINOS[randomPieceName];
@@ -142,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 rotations: pieceRotations,
                 rotationIndex: 0,
                 color: randomColor,
+                isCandyDrop: false,
                 isEmoji: false,
                 x: Math.floor(COLS / 2) - Math.floor(Math.max(...pieceRotations[0].map(p => p[1])) / 2), // Center piece
                 y: 0
@@ -150,9 +272,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawPiece(piece) {
-        piece.shape.forEach(([yOffset, xOffset]) => {
-            drawBlock(piece.x + xOffset, piece.y + yOffset, piece.color);
-        });
+        if (piece.isCandyDrop) {
+            piece.shape.forEach(([yOffset, xOffset]) => {
+                // Assign a random candy color to each block of the Candy Drop piece dynamically
+                const blockCandyColor = CANDY_COLORS[Math.floor(Math.random() * CANDY_COLORS.length)];
+                drawBlock(piece.x + xOffset, piece.y + yOffset, blockCandyColor);
+            });
+        } else {
+            piece.shape.forEach(([yOffset, xOffset]) => {
+                drawBlock(piece.x + xOffset, piece.y + yOffset, piece.color);
+            });
+        }
     }
 
     function isValidMove(piece, newX, newY, newShape) {
@@ -168,9 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function lockPiece(piece) {
-        if (piece.isEmoji) {
-            // Apply emoji effect, then the emoji block itself disappears (usually)
-            applyEmojiEffect(piece);
+        if (piece.isEmoji || piece.isCandyDrop) { // Updated condition
+            // Apply effect, then the piece itself disappears (usually)
+            applyEmojiEffect(piece); // Will use this for CandyDrop too
         } else {
             // Regular Monie-mino locking
             piece.shape.forEach(([yOffset, xOffset]) => {
@@ -181,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Common logic after piece is locked or effect applied
-        if (!piece.isEmoji && piece.y <= 0 && !isValidMove(piece, piece.x, piece.y + 1)) {
+        if (!piece.isEmoji && !piece.isCandyDrop && piece.y <= 0 && !isValidMove(piece, piece.x, piece.y + 1)) { // Updated condition
             let isTrulyGameOver = false;
             piece.shape.forEach(([yOffset, xOffset]) => {
                 if ((piece.y + yOffset) < 0) {
@@ -311,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             particles.forEach((p, index) => {
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.1; // Gravity
+                p.vy += p.vyGravity || 0.1; // Use custom gravity if defined, else default
                 p.life--;
                 if (p.life <= 0) {
                     particles.splice(index, 1);
@@ -348,6 +478,66 @@ document.addEventListener('DOMContentLoaded', () => {
         animationStep(); // Start the animation steps
     }
 
+    function animateMonieFlash(piece, originalEffectAction) {
+        isAnimatingLineClear = true; // Reuse this flag to pause game, or use a new one
+        clearInterval(gameInterval);
+
+        const flashDuration = 100; // ms for the main flash
+        const sparkleDuration = 400; // ms for sparkles to fade
+        const numSparkles = 30;
+
+        // 1. Big Flash
+        ctx.fillStyle = 'rgba(255, 255, 224, 0.8)'; // Light yellow, nearly white flash
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Create sparkles around the piece's landing position (or center screen for rocket)
+        const centerX = (piece.effect === 'clearColumn') ? (piece.x + 0.5) * BLOCK_SIZE : (piece.x + 0.5) * BLOCK_SIZE;
+        const centerY = (piece.effect === 'clearColumn') ? canvas.height / 2 : (piece.y + 0.5) * BLOCK_SIZE;
+
+        for (let i = 0; i < numSparkles; i++) {
+            particles.push({
+                x: centerX,
+                y: centerY,
+                vx: (Math.random() - 0.5) * 8, // Spread out
+                vy: (Math.random() - 0.5) * 8,
+                size: Math.random() * 8 + 4,
+                emoji: '✨',
+                life: 20 + Math.random() * 10, // Sparkles fade relatively quickly
+                isEmojiParticle: true,
+                vyGravity: 0.05 // Slight gravity for sparkles
+            });
+        }
+
+        // Redraw board and piece under flash quickly, then particles will be drawn over by gameLoop/animation system
+        setTimeout(() => {
+            drawBoard(); // Draw current board state
+            if(currentPiece && currentPiece !== piece) drawPiece(currentPiece); // Draw current falling piece if not the effect piece
+
+            // The main particle drawing loop is in animateLineClear, need to ensure particles are drawn
+            // For simplicity here, we'll rely on the fact that originalEffectAction will likely call clearLines,
+            // which then handles particle drawing. Or, we add a temporary particle draw here.
+            // Let's assume for now the line clear animation handles ongoing particle drawing.
+
+        }, flashDuration / 2); // Draw under flash quickly
+
+
+        setTimeout(() => {
+            // After flash and sparkle generation, execute the original effect
+            originalEffectAction(); // This will clear blocks and likely trigger clearLines animation
+
+            // Reset animation flag after original effect and its animations are expected to start
+            // This timing is tricky; ideally, originalEffectAction's own animations handle this.
+            // For now, we assume clearLines will handle the isAnimatingLineClear flag.
+            // If originalEffectAction doesn't call clearLines, this flag might get stuck.
+            // Let's ensure applyEmojiEffect sets it false if no line clear animation.
+            if (!particles.length) { // If no line clear particles were generated by the effect
+                 isAnimatingLineClear = false;
+                 if(!isPaused && !isGameOver) gameInterval = setInterval(gameLoop, gameSpeed);
+            }
+
+        }, sparkleDuration); // Execute after sparkles have had some time
+    }
+
 
     // --- Emoji Effect Functions ---
     function applyEmojiEffect(piece) {
@@ -355,24 +545,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (effect) {
             case 'clearColumn':
-                for (let r = 0; r < ROWS; r++) {
-                    board[r][x] = EMPTY_COLOR;
-                }
-                // Add points for column clear?
-                updateScore(0, 50 * ROWS); // e.g. 50 points per block cleared in column
-                break;
-            case 'explodeRadius':
-                const radius = 1; // Clears a 3x3 area (center + radius 1)
-                for (let r = Math.max(0, y - radius); r <= Math.min(ROWS - 1, y + radius); r++) {
-                    for (let c = Math.max(0, x - radius); c <= Math.min(COLS - 1, x + radius); c++) {
-                        // Optional: Check distance for a more circular explosion
-                        // if (Math.sqrt(Math.pow(r - y, 2) + Math.pow(c - x, 2)) <= radius) {
-                        board[r][c] = EMPTY_COLOR;
-                        // }
+                animateMonieFlash(piece, () => {
+                    for (let r = 0; r < ROWS; r++) {
+                        board[r][x] = EMPTY_COLOR;
                     }
-                }
-                updateScore(0, 200); // e.g. 200 points for bomb
-                break;
+                    updateScore(0, 50 * ROWS);
+                    clearLines(); // Check if this clearing action itself cleared lines
+                });
+                return; // Return early as animation handles follow-up
+            case 'explodeRadius':
+                animateMonieFlash(piece, () => {
+                    const radius = 1;
+                    for (let r = Math.max(0, y - radius); r <= Math.min(ROWS - 1, y + radius); r++) {
+                        for (let c = Math.max(0, x - radius); c <= Math.min(COLS - 1, x + radius); c++) {
+                            board[r][c] = EMPTY_COLOR;
+                        }
+                    }
+                    updateScore(0, 200);
+                    clearLines(); // Check if this clearing action itself cleared lines
+                });
+                return; // Return early
             case 'snapshotClear':
                 const snapshotSize = 3; // Clears a 3x3 area
                 const startY = Math.max(0, y - Math.floor(snapshotSize / 2));
@@ -388,10 +580,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateScore(0, 500); // e.g. 500 bonus points for money bag
                 // Money bag itself doesn't clear blocks, just gives points
                 break;
+            case 'candyExplosion':
+                updateScore(0, 1000); // Generous bonus points for Candy Drop
+                // Trigger candy particle shower
+                const pieceCenterX = (piece.x + Math.max(...piece.shape.map(p=>p[1])) / 2) * BLOCK_SIZE;
+                const pieceCenterY = (piece.y + Math.max(...piece.shape.map(p=>p[0])) / 2) * BLOCK_SIZE;
+
+                for (let i = 0; i < 50; i++) { // More particles for candy explosion
+                    particles.push({
+                        x: pieceCenterX + (Math.random() - 0.5) * BLOCK_SIZE * 3, // Spread wider
+                        y: pieceCenterY + (Math.random() - 0.5) * BLOCK_SIZE * 2,
+                        vx: (Math.random() - 0.5) * 5,
+                        vy: (Math.random() - 0.7) * 4 - 2, // Stronger upward burst initially
+                        size: Math.random() * 15 + 10,
+                        emoji: CANDY_EMOJIS[Math.floor(Math.random() * CANDY_EMOJIS.length)],
+                        life: 40 + Math.random() * 30, // Longer life for candy particles
+                        isEmojiParticle: true, // Use emoji drawing logic
+                        vyGravity: 0.15 // Slightly stronger gravity for candy
+                    });
+                }
+                // The Candy Drop piece itself does not remain on the board.
+                // No need to call clearLines() here unless the explosion itself could form lines,
+                // but candy drop is about bonus and visual flair.
+                break;
         }
-        // After applying effect, check for any lines that might have been formed or cleared indirectly
-        clearLines();
+        // After applying effect, if it's not a candy explosion, check for cleared lines.
+        if (effect !== 'candyExplosion') {
+            clearLines();
+        }
     }
+
+    // Modify particle drawing logic slightly to accommodate custom gravity for candy
+    // This will be done in animateLineClear and gameLoop (if particles are drawn there too)
+    // For now, let's assume the particle drawing in animateLineClear is the main one for effects
 
 
     function updateScore(linesCleared, bonusPoints = 0) {
@@ -451,7 +672,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentPiece && !isGameOver) {
             drawPiece(currentPiece);
         }
-        updateAndDrawMusicNotes(); // Add this call
+
+        // Draw general particles (e.g., from Candy Drop) if no line clear animation is running
+        if (!isAnimatingLineClear && particles.length > 0) {
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.vyGravity || 0.1;
+                p.life--;
+                if (p.life <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    if (p.isEmojiParticle) {
+                        ctx.font = `${p.size}px Arial`;
+                        ctx.textAlign = 'center';
+                        ctx.fillText(p.emoji, p.x, p.y);
+                    } else {
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            });
+        }
+
+        updateAndDrawMusicNotes();
     }
 
     const MUSIC_NOTES = ['🎵', '🎶', '🎼'];
@@ -496,6 +742,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startGame() {
         if (gameInterval) clearInterval(gameInterval);
+
+        // Explicitly clear canvas before drawing new game state
+        ctx.fillStyle = EMPTY_COLOR; // Should be canvas background
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         board = createBoard();
         currentScore = 0;
         scoreValueElement.textContent = currentScore;
@@ -507,6 +758,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPiece = getRandomPiece();
         isPaused = false;
         isGameOver = false;
+        isAnimatingLineClear = false; // Ensure this flag is reset
+
         startGameBtn.textContent = "Restart Game";
 
         drawBoard();
@@ -682,6 +935,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     startGameBtn.addEventListener('click', startGame);
+
+    // --- Touch Control Event Listeners ---
+    // Helper to simulate keydown for existing logic
+    function simulateKeydown(key) {
+        const event = new KeyboardEvent('keydown', { 'key': key });
+        document.dispatchEvent(event);
+    }
+
+    if (touchLeftBtn) {
+        touchLeftBtn.addEventListener('click', () => {
+            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowLeft');
+        });
+    }
+    if (touchRightBtn) {
+        touchRightBtn.addEventListener('click', () => {
+            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowRight');
+        });
+    }
+    if (touchRotateBtn) {
+        touchRotateBtn.addEventListener('click', () => {
+            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowUp');
+        });
+    }
+    if (touchDownBtn) {
+        touchDownBtn.addEventListener('click', () => {
+            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowDown');
+        });
+    }
 
     board = createBoard();
     drawBoard();
