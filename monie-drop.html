@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monie Drop Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="monie-drop.css">
+</head>
+<body>
+    <header class="header container">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">GET <span>MONIE</span></a>
+        </div>
+        <nav class="nav">
+            <a href="index.html#package-builder-section" class="nav-link">Services</a>
+            <a href="https://adobe.ly/3P9IOGN" class="nav-link" target="_blank">Portfolio</a>
+            <a href="index.html#footer" class="nav-link">Contact</a>
+        </nav>
+    </header>
+
+    <main class="container game-container">
+        <h1>Monie Drop</h1>
+        <div class="game-area">
+            <canvas id="monieDropCanvas"></canvas>
+            <div class="game-info">
+                <div class="score">
+                    <h2>Score</h2>
+                    <p id="scoreValue">0</p>
+                </div>
+                <div class="high-score">
+                    <h2>High Score</h2>
+                    <p id="highScoreValue">0</p>
+                </div>
+                <div class="controls">
+                    <h2>Controls</h2>
+                    <p>Left/Right Arrows: Move</p>
+                    <p>Up Arrow: Rotate</p>
+                    <p>Down Arrow: Speed Up</p>
+                    <p>P: Pause</p>
+                </div>
+            </div>
+        </div>
+        <button id="startGameBtn" class="cta-button">Start Game</button>
+    </main>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    GET <span>MONIE</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <a href="index.html">Home</a>
+                        <a href="https://adobe.ly/3P9IOGN" target="_blank">Portfolio</a>
+                        <a href="index.html#package-builder-section">Services</a>
+                        <a href="#">About</a>
+                        <a href="#footer">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ" target="_blank">Wedding Photography</a>
+                        <a href="https://youtu.be/JMCvPcut658" target="_blank">Event Videography</a>
+                        <a href="https://adobe.ly/3P9IOGN" target="_blank">Portrait Sessions</a>
+                        <a href="https://youtu.be/JMCvPcut658" target="_blank">Commercial Production</a>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact</h3>
+                        <p>Email: getmonieproductions@gmail.com</p>
+                        <p>Phone: 337-356-2331</p>
+                        <p><a href="https://drive.google.com/file/d/1a3pqkJ_Do3fK2fCQLCQgpwPHPfHwA6Wu/view?usp=sharing" target="_blank">Virtual Business Card</a></p>
+                        <div class="social-icons">
+                            <a href="https://www.facebook.com/GetMonieProductions/" class="social-icon" target="_blank">FB</a>
+                            <a href="https://www.instagram.com/qmoniep/" class="social-icon" target="_blank">IG</a>
+                            <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ" class="social-icon" target="_blank">YT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 GET MONIE Photography & Videography. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="monie-drop.js"></script>
+</body>
+</html>

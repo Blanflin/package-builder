@@ -889,6 +889,49 @@ button {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* Game Promo Section Styles */
+.game-promo-section {
+  background-color: var(--light-gray); /* Or a different contrasting background */
+  text-align: center;
+}
+
+.game-promo-section .section-title h2 {
+  color: var(--primary-color); /* Or keep it default if section title handles it */
+}
+
+.game-promo-section .section-title p {
+  color: var(--dark-gray);
+  max-width: 700px; /* Adjust as needed */
+}
+
+.game-promo-content {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.game-promo-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--dark-gray);
+  margin-bottom: 2rem;
+}
+
+.game-preview-image { /* Style for optional image */
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.game-promo-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.2rem;
+  /* cta-button styles will apply, can add overrides here if needed */
+}
+
+
 /* Responsive Styles */
 @media (min-width: 768px) {
   .summary-container {

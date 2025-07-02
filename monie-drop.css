@@ -1,0 +1,122 @@
+/* Basic Styles for Monie Drop Game */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color); /* Using existing variable for dark background */
+    color: var(--background-color); /* Light text on dark background */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.game-container h1 {
+    color: var(--secondary-color); /* Gold color for the game title */
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.game-area {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 800px; /* Max width for the game area */
+    justify-content: center;
+}
+
+#monieDropCanvas {
+    border: 3px solid var(--secondary-color); /* Gold border for the canvas */
+    background-color: #0a0a0a; /* Slightly lighter black for game board */
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--secondary-color); /* Gold glow effect */
+}
+
+.game-info {
+    background-color: #1f1f1f; /* Darker panel for info */
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+    width: 200px; /* Fixed width for the info panel */
+    box-shadow: var(--shadow);
+}
+
+.game-info h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+}
+
+.game-info p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.score #scoreValue, .high-score #highScoreValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-align: right;
+}
+
+.controls {
+    margin-top: 1.5rem;
+}
+
+.controls p {
+    font-size: 0.9rem;
+}
+
+#startGameBtn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    margin-top: 1rem; /* Added some margin for spacing */
+}
+
+/* Ensure header and footer from main styles.css are used and styled correctly */
+/* The existing .header, .logo, .nav, .footer styles from styles.css should apply */
+
+/* Responsive adjustments for game page */
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .game-info {
+        width: 80%; /* Make info panel wider on smaller screens */
+        max-width: 300px; /* But not too wide */
+        margin-top: 2rem;
+    }
+
+    .game-container h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container h1 {
+        font-size: 2rem;
+    }
+    #monieDropCanvas {
+        width: 90vw; /* Adjust canvas size for small screens */
+        height: auto; /* Maintain aspect ratio */
+    }
+    .game-info {
+        width: 90vw;
+    }
+}
