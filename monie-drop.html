@@ -34,14 +34,26 @@
                 </div>
                 <div class="controls">
                     <h2>Controls</h2>
-                    <p>Left/Right Arrows: Move</p>
-                    <p>Up Arrow: Rotate</p>
-                    <p>Down Arrow: Speed Up</p>
-                    <p>P: Pause</p>
+                    <!-- Keyboard instructions will be hidden by CSS on smaller screens -->
+                    <p class="keyboard-instruction">Left/Right Arrows: Move</p>
+                    <p class="keyboard-instruction">Up Arrow: Rotate</p>
+                    <p class="keyboard-instruction">Down Arrow: Speed Up</p>
+                    <p class="keyboard-instruction">P: Pause</p>
+                    <!-- Touch instructions - will be shown by default or if keyboard hidden -->
+                    <p class="touch-instruction">Use on-screen buttons to control.</p>
+                    <p class="touch-instruction">Tap P (top of screen or via menu if added) to Pause.</p>
+                    <!-- Note: Pause button for touch needs to be considered, for now 'P' key is mentioned -->
                 </div>
             </div>
         </div>
         <button id="startGameBtn" class="cta-button">Start Game</button>
+
+        <div class="touch-controls-container">
+            <button id="touchLeftBtn" class="touch-control-button" aria-label="Move Left">&#x2190;</button>
+            <button id="touchRotateBtn" class="touch-control-button" aria-label="Rotate">&#x21BB;</button>
+            <button id="touchDownBtn" class="touch-control-button" aria-label="Move Down">&#x2193;</button>
+            <button id="touchRightBtn" class="touch-control-button" aria-label="Move Right">&#x2192;</button>
+        </div>
     </main>
 
     <footer class="footer" id="footer">

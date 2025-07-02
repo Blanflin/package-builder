@@ -120,3 +120,54 @@ body {
         width: 90vw;
     }
 }
+
+/* Touch Controls Styles */
+.touch-controls-container {
+    display: none; /* Hidden by default, shown via media query for touch devices */
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    margin: 2rem auto 1rem; /* Spacing from game area and bottom */
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background */
+    border-radius: 8px;
+}
+
+.touch-control-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular buttons */
+    width: 60px;       /* Size of buttons */
+    height: 60px;
+    font-size: 1.8rem; /* Size of arrow icons */
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.touch-control-button:hover,
+.touch-control-button:active {
+    background-color: #c4a030; /* Darker gold on hover/active */
+    transform: translateY(-2px);
+}
+
+/* Show touch controls on smaller screens (typical for touch devices) */
+/* This is a common proxy for touch capability, but not perfect. */
+/* Ideally, JS would detect touch support and show controls. */
+@media (max-width: 768px) { /* Or a more specific breakpoint for touch UIs */
+    .touch-controls-container {
+        display: flex;
+    }
+    .game-info .controls p { /* Hide keyboard instructions on small screens */
+        display: none;
+    }
+    .game-info .controls p.touch-instruction { /* Add a class for touch instruction if needed */
+        display: block;
+    }
+}
