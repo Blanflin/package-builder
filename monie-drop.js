@@ -151,21 +151,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 [[1,0],[1,1],       [1,3]]
             ]
         ],
-        'GM_Bar': [ // Simple Bar (like Tetris I) - Retaining for variety
-            [ [[0,0], [1,0], [2,0], [3,0]] ], // Vertical
-            [ [[0,0], [0,1], [0,2], [0,3]] ]  // Horizontal
+        /* --- Temporarily commenting out simpler shapes to test custom GM logos ---
+        'GM_Bar': [
+            [ [[0,0], [1,0], [2,0], [3,0]] ],
+            [ [[0,0], [0,1], [0,2], [0,3]] ]
         ],
-        'GM_Square': [ // 2x2 Square - Retaining
+        'GM_Square': [
             [ [[0,0], [0,1], [1,0], [1,1]] ]
         ],
-        // Standard L, J, T shapes can also be retained or removed if GM logos are preferred
         'GM_L_Shape': [
             [ [[0,0], [1,0], [2,0], [2,1]] ],
             [ [[0,0], [0,1], [0,2], [1,0]] ],
             [ [[0,1], [1,1], [2,1], [0,0]] ],
             [ [[2,0], [2,1], [2,2], [1,2]] ]
         ]
-        // Not including J and T for now to give more prominence to new GM shapes
+        */
     };
     const PIECE_COLORS = ['#D4AF37', '#C0C0C0', '#FFD700', '#E5E4E2', '#B08D57', '#A9A9A9', '#F4A460', '#CD7F32'];
 
@@ -877,58 +877,87 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.addEventListener('keydown', (event) => {
-        if (isGameOver || !currentPiece || isPaused) return;
+    // --- Game Control Functions ---
+    function handleMoveLeft() {
+        if (isGameOver || !currentPiece || isPaused) return false;
+        if (isValidMove(currentPiece, currentPiece.x - 1, currentPiece.y)) {
+            currentPiece.x--;
+            return true;
+        }
+        return false;
+    }
 
-        let moved = false;
-        if (event.key === 'ArrowLeft') {
-            if (isValidMove(currentPiece, currentPiece.x - 1, currentPiece.y)) {
-                currentPiece.x--;
-                moved = true;
-            }
-        } else if (event.key === 'ArrowRight') {
-            if (isValidMove(currentPiece, currentPiece.x + 1, currentPiece.y)) {
-                currentPiece.x++;
-                moved = true;
-            }
-        } else if (event.key === 'ArrowDown') {
-            if (isValidMove(currentPiece, currentPiece.x, currentPiece.y + 1)) {
-                currentPiece.y++;
-                // Reset interval to apply speed consistently and avoid double drop with auto-drop
-                clearInterval(gameInterval);
-                gameInterval = setInterval(gameLoop, gameSpeed);
-                moved = true;
-            } else {
-                lockPiece(currentPiece); // Lock if it can't move further down
-            }
-        } else if (event.key === 'ArrowUp') { // Rotate
-            const currentRotationIndex = currentPiece.rotationIndex;
-            const nextRotationIndex = (currentRotationIndex + 1) % currentPiece.rotations.length;
-            const nextShape = currentPiece.rotations[nextRotationIndex];
+    function handleMoveRight() {
+        if (isGameOver || !currentPiece || isPaused) return false;
+        if (isValidMove(currentPiece, currentPiece.x + 1, currentPiece.y)) {
+            currentPiece.x++;
+            return true;
+        }
+        return false;
+    }
 
-            // Basic wall kick: try to move left/right if rotation is blocked
-            let kickOffset = 0;
-            if (!isValidMove(currentPiece, currentPiece.x, currentPiece.y, nextShape)) {
-                if (isValidMove(currentPiece, currentPiece.x + 1, currentPiece.y, nextShape)) { // Try kick right
-                    kickOffset = 1;
-                } else if (isValidMove(currentPiece, currentPiece.x - 1, currentPiece.y, nextShape)) { // Try kick left
-                    kickOffset = -1;
-                }
-                // Could add more complex wall kick (e.g., try move up/down slightly, or further kicks)
-            }
+    function handleMoveDown() {
+        if (isGameOver || !currentPiece || isPaused) return false;
+        if (isValidMove(currentPiece, currentPiece.x, currentPiece.y + 1)) {
+            currentPiece.y++;
+            // Reset interval to apply speed consistently and avoid double drop with auto-drop
+            clearInterval(gameInterval);
+            gameInterval = setInterval(gameLoop, gameSpeed);
+            return true;
+        } else {
+            lockPiece(currentPiece); // Lock if it can't move further down
+            return false; // Movement didn't happen, piece locked
+        }
+    }
 
-            if (isValidMove(currentPiece, currentPiece.x + kickOffset, currentPiece.y, nextShape)) {
-                currentPiece.x += kickOffset;
-                currentPiece.shape = nextShape;
-                currentPiece.rotationIndex = nextRotationIndex;
-                moved = true;
+    function handleRotate() {
+        if (isGameOver || !currentPiece || isPaused) return false;
+        const currentRotationIndex = currentPiece.rotationIndex;
+        const nextRotationIndex = (currentRotationIndex + 1) % currentPiece.rotations.length;
+        const nextShape = currentPiece.rotations[nextRotationIndex];
+
+        let kickOffset = 0;
+        if (!isValidMove(currentPiece, currentPiece.x, currentPiece.y, nextShape)) {
+            if (isValidMove(currentPiece, currentPiece.x + 1, currentPiece.y, nextShape)) {
+                kickOffset = 1;
+            } else if (isValidMove(currentPiece, currentPiece.x - 1, currentPiece.y, nextShape)) {
+                kickOffset = -1;
             }
-        } else if (event.key.toLowerCase() === 'p') {
-            pauseGame(); // Pause is handled separately
-            return; // Don't redraw if pausing
         }
 
-        if (moved && !isPaused) {
+        if (isValidMove(currentPiece, currentPiece.x + kickOffset, currentPiece.y, nextShape)) {
+            currentPiece.x += kickOffset;
+            currentPiece.shape = nextShape;
+            currentPiece.rotationIndex = nextRotationIndex;
+            return true;
+        }
+        return false;
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (isGameOver || !currentPiece || isPaused) return; // Initial check
+
+        let moved = false;
+        switch (event.key) {
+            case 'ArrowLeft':
+                moved = handleMoveLeft();
+                break;
+            case 'ArrowRight':
+                moved = handleMoveRight();
+                break;
+            case 'ArrowDown':
+                moved = handleMoveDown();
+                break;
+            case 'ArrowUp':
+                moved = handleRotate();
+                break;
+            case 'p':
+            case 'P':
+                pauseGame();
+                return; // Pause doesn't count as a "move" for redraw
+        }
+
+        if (moved && !isPaused) { // Redraw only if a move happened and not paused
             drawBoard();
             if (currentPiece) drawPiece(currentPiece);
         }
@@ -937,30 +966,41 @@ document.addEventListener('DOMContentLoaded', () => {
     startGameBtn.addEventListener('click', startGame);
 
     // --- Touch Control Event Listeners ---
-    // Helper to simulate keydown for existing logic
-    function simulateKeydown(key) {
-        const event = new KeyboardEvent('keydown', { 'key': key });
-        document.dispatchEvent(event);
-    }
-
     if (touchLeftBtn) {
         touchLeftBtn.addEventListener('click', () => {
-            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowLeft');
+            if (handleMoveLeft() && !isPaused) {
+                drawBoard();
+                if (currentPiece) drawPiece(currentPiece);
+            }
         });
     }
     if (touchRightBtn) {
         touchRightBtn.addEventListener('click', () => {
-            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowRight');
+            if (handleMoveRight() && !isPaused) {
+                drawBoard();
+                if (currentPiece) drawPiece(currentPiece);
+            }
         });
     }
     if (touchRotateBtn) {
         touchRotateBtn.addEventListener('click', () => {
-            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowUp');
+            if (handleRotate() && !isPaused) {
+                drawBoard();
+                if (currentPiece) drawPiece(currentPiece);
+            }
         });
     }
     if (touchDownBtn) {
         touchDownBtn.addEventListener('click', () => {
-            if (!isPaused && !isGameOver && currentPiece) simulateKeydown('ArrowDown');
+            // handleMoveDown() already includes redraw logic if piece locks,
+            // but we need to redraw if it just moves down one step.
+            if (handleMoveDown() && !isPaused) { // Check if it moved (didn't lock)
+                 drawBoard();
+                 if (currentPiece) drawPiece(currentPiece);
+            } else if (!isPaused && !currentPiece) { // It locked, new piece generated
+                 drawBoard(); // Redraw board for new piece
+                 if (currentPiece) drawPiece(currentPiece);
+            }
         });
     }
 
