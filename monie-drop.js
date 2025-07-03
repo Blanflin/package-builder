@@ -16,11 +16,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game constants
     const COLS = 10;
     const ROWS = 20;
-    const BLOCK_SIZE = 30;
+    let BLOCK_SIZE; // Will be calculated dynamically
     const EMPTY_COLOR = '#0a0a0a';
 
-    canvas.width = COLS * BLOCK_SIZE;
-    canvas.height = ROWS * BLOCK_SIZE;
+    // Canvas dimension settings (percentages of viewport)
+    const CANVAS_HEIGHT_PERCENT = 0.60; // Try to use 60% of viewport height for canvas
+    const CANVAS_WIDTH_PERCENT = 0.95;  // Try to use 95% of viewport width for canvas
+
+    function calculateBlockSizeAndSetCanvas() {
+        const availableHeight = window.innerHeight * CANVAS_HEIGHT_PERCENT;
+        let potentialBlockSizeH = Math.floor(availableHeight / ROWS);
+
+        const availableWidth = window.innerWidth * CANVAS_WIDTH_PERCENT;
+        let potentialBlockSizeW = Math.floor(availableWidth / COLS);
+
+        // Ensure touch controls have some space if canvas width is very constrained by height
+        // This is a heuristic; might need refinement.
+        // If potentialBlockSizeH makes canvas very wide, it might crowd out touch controls on wide, short screens.
+        // However, usually height is the constraint on mobile.
+        BLOCK_SIZE = Math.min(potentialBlockSizeH, potentialBlockSizeW);
+
+        if (BLOCK_SIZE < 5) BLOCK_SIZE = 5; // Minimum block size to prevent issues
+
+        canvas.width = COLS * BLOCK_SIZE;
+        canvas.height = ROWS * BLOCK_SIZE;
+
+        // Adjust canvas style if it's centered or needs specific margins based on new size
+        // For example, if canvas is centered using margin auto, its parent might need to be display:flex.
+        // For now, assuming direct sizing and CSS handles centering.
+        console.log(`DEBUG: Calculated BLOCK_SIZE: ${BLOCK_SIZE}, Canvas: ${canvas.width}x${canvas.height}`);
+    }
+
+    // Calculate initial size
+    calculateBlockSizeAndSetCanvas();
+
+    const DEFAULT_BLOCK_SIZE_FOR_FONT_SCALING = 30; // The BLOCK_SIZE used when initially designing font sizes
+
+    function getScaledFontSize(baseSize) {
+        const scaleFactor = BLOCK_SIZE / DEFAULT_BLOCK_SIZE_FOR_FONT_SCALING;
+        return Math.max(8, Math.floor(baseSize * scaleFactor)); // Minimum font size of 8px
+    }
 
     let board = [];
     let currentScore = 0;
@@ -220,6 +255,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getRandomPiece() {
+        // --- AGGRESSIVE DEBUGGING: Force simplest piece (Now removed) ---
+        // console.log("DEBUG: getRandomPiece called, forcing simple piece.");
+        // return {
+        //     shape: [[[0,0]]], // Single block piece
+        //     rotations: [[[[0,0]]]],
+        //     rotationIndex: 0,
+        //     color: '#FF0000', // Bright Red for visibility
+        //     isCandyDrop: false,
+        //     isEmoji: false,
+        //     x: Math.floor(COLS / 2),
+        //     y: 0
+        // };
+        // --- END AGGRESSIVE DEBUGGING ---
+
+        // Original getRandomPiece logic (restored)
         if (Math.random() < EMOJI_SPAWN_RATE) {
             const emojiNames = Object.keys(EMOJI_BLOCKS);
             const randomEmojiName = emojiNames[Math.floor(Math.random() * emojiNames.length)];
@@ -241,6 +291,36 @@ document.addEventListener('DOMContentLoaded', () => {
             // This requires a more complex piece structure or drawing logic.
             // For now, let's give the piece a general "candy" type and a base candy color.
             // The multi-color block effect will be handled in drawPiece.
+            return {
+                shape: pieceRotations[0], // Or a random rotation
+                rotations: pieceRotations,
+                rotationIndex: 0,
+                color: CANDY_COLORS[Math.floor(Math.random() * CANDY_COLORS.length)], // A base color for the piece
+                isCandyDrop: true, // Special flag
+                isEmoji: false, // Not a 1x1 emoji block, but special
+                effect: 'candyExplosion', // Effect name
+                x: Math.floor(COLS / 2) - Math.floor(Math.max(...pieceRotations[0].map(p => p[1])) / 2),
+                y: 0
+            };
+        }
+        else { // Regular Monie-Mino
+            const pieceNames = Object.keys(MONIE_MINOS);
+            const randomPieceName = pieceNames[Math.floor(Math.random() * pieceNames.length)];
+            const pieceRotations = MONIE_MINOS[randomPieceName];
+            const randomColor = PIECE_COLORS[Math.floor(Math.random() * PIECE_COLORS.length)];
+            return {
+                shape: pieceRotations[0],
+                rotations: pieceRotations,
+                rotationIndex: 0,
+                color: randomColor,
+                isCandyDrop: false,
+                isEmoji: false,
+                x: Math.floor(COLS / 2) - Math.floor(Math.max(...pieceRotations[0].map(p => p[1])) / 2), // Center piece
+                y: 0
+            };
+        } else if (Math.random() < CANDY_DROP_SPAWN_RATE && MONIE_MINOS['Classic_GM']) {
+            // Spawn a Candy Drop piece (uses Classic_GM shape)
+            const pieceRotations = MONIE_MINOS['Classic_GM'];
             return {
                 shape: pieceRotations[0], // Or a random rotation
                 rotations: pieceRotations,
@@ -416,12 +496,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const particleEmoji = clearedRowIndices.length >= 4 ? (Math.random() < 0.3 ? '💎' : (Math.random() < 0.5 ? '🏆' : '✨')) : (clearedRowIndices.length === 3 ? '🌟' : '✨');
 
                     for (let i = 0; i < (clearedRowIndices.length >=4 ? 15 : 10); i++) { // More particles for Monie Drop
+                        const baseParticleSize = clearedRowIndices.length >= 4 ? (Math.random() * 0.3 + 0.3) : (Math.random() * 0.15 + 0.15); // Factor of BLOCK_SIZE
                         particles.push({
                             x: Math.random() * COLS * BLOCK_SIZE,
                             y: (r + 0.5) * BLOCK_SIZE,
                             vx: (Math.random() - 0.5) * 4,
                             vy: (Math.random() - 0.8) * 3 - 1, // Generally upward
-                            size: clearedRowIndices.length >= 4 ? (Math.random() * 10 + 10) : (Math.random() * 5 + 5), // Larger for Monie Drop
+                            size: BLOCK_SIZE * baseParticleSize, // Scaled size
+                            fontSize: getScaledFontSize(clearedRowIndices.length >= 4 ? 20 : 15), // For emoji text particles
                             color: particleColor,
                             emoji: particleEmoji,
                             life: 20 + Math.random() * 20, // Shorter life for quick burst
@@ -447,27 +529,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     particles.splice(index, 1);
                 } else {
                     if (p.isEmojiParticle) {
-                        ctx.font = `${p.size}px Arial`;
+                        ctx.font = `${p.fontSize}px Arial`; // Use pre-calculated scaled font size
                         ctx.textAlign = 'center';
                         ctx.fillText(p.emoji, p.x, p.y);
-                    } else {
+                    } else { // Non-emoji, drawn with arc
                         ctx.fillStyle = p.color;
                         ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+                        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2); // p.size is already scaled
                         ctx.fill();
                     }
                 }
             });
 
             // MONIE DROP! Text (appears after initial flash and persists during particle effect)
-            if (clearedRowIndices.length >= 4 && currentStep > 1) {
-                ctx.font = `bold ${BLOCK_SIZE * 1.5}px "Playfair Display", serif`;
+            if (clearedRowIndices.length >= 4 && currentStep > 1) { // Also for the re-draw part of animation
+                ctx.font = `bold ${getScaledFontSize(45)}px "Playfair Display", serif`;
                 ctx.fillStyle = 'var(--secondary-color)';
                 ctx.textAlign = 'center';
                 ctx.shadowColor = 'black';
-                ctx.shadowBlur = 7;
+                ctx.shadowBlur = getScaledFontSize(7); // Scale shadow blur
                 ctx.fillText("MONIE DROP!", canvas.width / 2, canvas.height / 2);
                 ctx.shadowBlur = 0;
+                ctx.font = `${getScaledFontSize(30)}px Arial`; // For 💎🏆
+                ctx.fillText('💎🏆', canvas.width / 2, canvas.height / 2 + getScaledFontSize(50));
             }
 
             if (currentPiece && !isGameOver) drawPiece(currentPiece); // Redraw current piece on top
@@ -500,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 y: centerY,
                 vx: (Math.random() - 0.5) * 8, // Spread out
                 vy: (Math.random() - 0.5) * 8,
-                size: Math.random() * 8 + 4,
+                fontSize: getScaledFontSize(18), // Scaled font size for sparkles
                 emoji: '✨',
                 life: 20 + Math.random() * 10, // Sparkles fade relatively quickly
                 isEmojiParticle: true,
@@ -744,8 +828,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameInterval) clearInterval(gameInterval);
 
         // Explicitly clear canvas before drawing new game state
-        ctx.fillStyle = EMPTY_COLOR; // Should be canvas background
+        // ctx.fillStyle = EMPTY_COLOR; // This will be handled by drawBoard after resize
+        // ctx.fillRect(0, 0, canvas.width, canvas.height); // This too
+
+        calculateBlockSizeAndSetCanvas(); // Recalculate and set canvas size
+        // Now clear with new dimensions
+        ctx.fillStyle = EMPTY_COLOR;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
         board = createBoard();
         currentScore = 0;
@@ -755,7 +845,10 @@ document.addEventListener('DOMContentLoaded', () => {
         musicNoteParticles = []; // Clear any leftover music notes
         particles = []; // Clear any leftover line clear particles
 
+        // console.log("DEBUG: startGame - Before getRandomPiece"); // Keep for now if helpful
         currentPiece = getRandomPiece();
+        console.log("DEBUG: startGame - After getRandomPiece, piece:", currentPiece);
+
         isPaused = false;
         isGameOver = false;
         isAnimatingLineClear = false; // Ensure this flag is reset
@@ -784,13 +877,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.85)'; // Darker overlay for text
             ctx.fillRect(0, 0, canvas.width, canvas.height); // Cover screen
 
-            ctx.font = `bold ${BLOCK_SIZE * 1.5}px "Playfair Display", serif`;
+            ctx.font = `bold ${getScaledFontSize(45)}px "Playfair Display", serif`; // Base 45 for BLOCK_SIZE*1.5 feel
             ctx.fillStyle = 'var(--secondary-color)';
             ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - BLOCK_SIZE);
+            ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - getScaledFontSize(30)); // Adjust Y offset
 
-            ctx.font = `${BLOCK_SIZE * 2}px Arial`; // For emoji
-            ctx.fillText('🎺', canvas.width / 2, canvas.height / 2 + BLOCK_SIZE * 1.5);
+            ctx.font = `${getScaledFontSize(60)}px Arial`; // Base 60 for BLOCK_SIZE*2 feel (for emoji 🎺)
+            ctx.fillText('🎺', canvas.width / 2, canvas.height / 2 + getScaledFontSize(45)); // Adjust Y offset
 
             startGameBtn.textContent = "Play Again?";
             startGameBtn.disabled = false;
@@ -868,11 +961,15 @@ document.addEventListener('DOMContentLoaded', () => {
         isPaused = !isPaused;
         if (isPaused) {
             clearInterval(gameInterval);
-            ctx.font = '24px "Playfair Display", serif';
+            ctx.font = `bold ${getScaledFontSize(24)}px "Playfair Display", serif`; // Base 24
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.textAlign = 'center';
             ctx.fillText('PAUSED', canvas.width / 2, canvas.height / 2);
         } else {
+            // On unpause, redraw board immediately before interval starts to avoid old frame flash
+            drawBoard();
+            if (currentPiece) drawPiece(currentPiece);
+            updateAndDrawMusicNotes(); // And music notes
             gameInterval = setInterval(gameLoop, gameSpeed);
         }
     }
@@ -1005,9 +1102,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     board = createBoard();
-    drawBoard();
-    ctx.font = '20px "Playfair Display", serif';
-    ctx.fillStyle = 'var(--secondary-color)';
-    ctx.textAlign = 'center';
-    ctx.fillText('Click "Start Game" to Play!', canvas.width / 2, canvas.height / 2);
+    drawBoard(); // Initial draw with calculated BLOCK_SIZE
+
+    // Initial message - also needs to be drawn after canvas is sized.
+    // This logic might better be placed inside a function called after calculateBlockSizeAndSetCanvas
+    // or drawn once in startGame if no game is active.
+    // For now, let's ensure its font is scaled if it's drawn.
+    function drawInitialMessage() {
+        if (!gameInterval && !isGameOver) { // Only if game not started/over
+            ctx.font = `bold ${getScaledFontSize(20)}px "Playfair Display", serif`; // Base 20
+            ctx.fillStyle = 'var(--secondary-color)';
+            ctx.textAlign = 'center';
+            // Clear a space for the text, or ensure drawBoard happened first
+            // ctx.clearRect(0, canvas.height / 2 - getScaledFontSize(20), canvas.width, getScaledFontSize(40));
+            ctx.fillText('Click "Start Game" to Play!', canvas.width / 2, canvas.height / 2);
+        }
+    }
+    drawInitialMessage(); // Call it once on load
+    // And ensure startGame clears it by calling drawBoard() after canvas resize.
 });
