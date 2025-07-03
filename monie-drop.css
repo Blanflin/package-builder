@@ -40,6 +40,18 @@ body {
     background-color: #0a0a0a; /* Slightly lighter black for game board */
     border-radius: 8px;
     box-shadow: 0 0 20px var(--secondary-color); /* Gold glow effect */
+    /* Ensure canvas can shrink and scale */
+    max-width: 100%;
+    /* Height is set by JS based on ROWS * BLOCK_SIZE.
+       If BLOCK_SIZE is fixed, height is fixed.
+       For true responsiveness, BLOCK_SIZE might need to be dynamic
+       or canvas height capped, which is a larger JS change.
+       This CSS change primarily helps width. */
+}
+
+.game-container { /* Ensure this container allows content to scroll if it overflows viewport height */
+    /* min-height: 100vh; /* This could force it to be too tall if content is short */
+    /* Consider overflow-y: auto; if sections within it should scroll, but that's more complex */
 }
 
 .game-info {
@@ -165,9 +177,58 @@ body {
         display: flex;
     }
     .game-info .controls p { /* Hide keyboard instructions on small screens */
-        display: none;
+        /* display: none; Let's keep them for now, but make them smaller */
+        font-size: 0.7rem;
+        line-height: 1.2;
+        margin-bottom: 0.2rem;
     }
-    .game-info .controls p.touch-instruction { /* Add a class for touch instruction if needed */
+    .game-info .controls p.touch-instruction {
         display: block;
+        font-size: 0.8rem; /* Make touch instructions slightly more prominent than keyboard ones on mobile */
     }
+    .game-info h2 {
+        font-size: 1.2rem; /* Smaller headings in info panel */
+        margin-bottom: 0.5rem;
+    }
+    .game-info p, .score #scoreValue, .high-score #highScoreValue {
+        font-size: 0.9rem; /* Smaller general text & scores */
+    }
+    .score #scoreValue, .high-score #highScoreValue {
+        font-size: 1.3rem; /* Slightly larger for actual score numbers */
+    }
+    .game-info {
+        padding: 0.8rem; /* Reduced padding */
+        width: 90%; /* Ensure it doesn't try to be too wide */
+        margin-top: 1rem; /* Reduced margin from canvas */
+    }
+
+    .touch-controls-container {
+        margin: 1rem auto 0.5rem; /* Reduced margins */
+        padding: 0.25rem;
+        max-width: 300px; /* Smaller touch control bar */
+    }
+    .touch-control-button {
+        width: 50px; /* Smaller buttons */
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .game-container h1 { /* Game Title */
+        font-size: 1.8rem; /* Smaller main game title */
+        margin-bottom: 1rem;
+    }
+
+    /* Attempt to make the game container fit better, less aggressive than full viewport height */
+    .game-container {
+        padding-top: 1rem; /* Reduce top padding */
+        padding-bottom: 1rem;
+    }
+
+    /* If canvas is still too tall due to fixed BLOCK_SIZE * ROWS */
+    /* We might need JS to adjust BLOCK_SIZE or ROWS for mobile, */
+    /* or accept that canvas itself will scroll if very tall. */
+    /* Forcing canvas height with CSS can distort drawing if aspect ratio isn't handled in JS. */
+    /* Example: (Use with caution, may distort blocks if BLOCK_SIZE isn't also adjusted) */
+    /* #monieDropCanvas { max-height: 60vh; } */
+
 }
