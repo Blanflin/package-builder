@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GET MONIE Photography & Videography Package Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header class="header container">
         <div class="logo">
@@ -27,7 +31,7 @@
         <div class="hero-content">
             <h1>Capture Your Perfect Moments</h1>
             <p>Professional photography and videography services tailored to your needs</p>
-            <button class="cta-button" onclick="scrollToBuilder()">Build Your Package</button>
+            <button id="build-btn" class="cta-button">Build Your Package</button>
         </div>
     </section>
 
@@ -39,7 +43,8 @@
         <div class="game-promo-content">
             <!-- Optional: Could add a small preview image/gif of the game here later -->
             <!-- <img src="images/monie-drop-preview.png" alt="Monie Drop Game Preview" class="game-preview-image"> -->
-            <p>Instead of old, blocky pieces, we usin' dese slick "Get Monie" logos. Fit 'em together just right, clear lines, and watch for special Emoji Blocks! 🎶 Can you get the ultimate "MONIE DROP!"?</p>
+            <p>Instead of old, blocky pieces, we usin' dese slick "Get Monie" logos. Fit 'em together just right, clear
+                lines, and watch for special Emoji Blocks! 🎶 Can you get the ultimate "MONIE DROP!"?</p>
             <a href="monie-drop.html" class="cta-button game-promo-button">Play Monie Drop!</a>
         </div>
     </section>
@@ -73,7 +78,7 @@
                     <div class="selection-grid" id="service-type-grid">
                     </div>
                     <div class="navigation-buttons">
-                        <button onclick="goToPreviousStep()" class="back-button">Back</button>
+                        <button id="step-2-back-btn" class="back-button">Back</button>
                     </div>
                 </div>
 
@@ -81,10 +86,10 @@
                     <h2>Choose your <span id="event-service-title"></span> Package</h2>
                     <p>Select the package that best fits your needs and budget.</p>
                     <div class="view-toggle">
-                        <button id="card-view-btn" class="toggle-button active" onclick="setViewMode('card')">
+                        <button id="card-view-btn" class="toggle-button active">
                             Card View
                         </button>
-                        <button id="comparison-view-btn" class="toggle-button" onclick="setViewMode('comparison')">
+                        <button id="comparison-view-btn" class="toggle-button">
                             Comparison View
                         </button>
                     </div>
@@ -96,7 +101,7 @@
                     </div>
 
                     <div class="navigation-buttons">
-                        <button onclick="goToPreviousStep()" class="back-button">Back</button>
+                        <button id="step-3-back-btn" class="back-button">Back</button>
                     </div>
                 </div>
 
@@ -148,8 +153,8 @@
                     </div>
 
                     <div class="navigation-buttons">
-                        <button onclick="goToPreviousStep()" class="back-button">Back</button>
-                        <button onclick="goToNextStep()" class="next-button">Continue to Summary</button>
+                        <button id="step-4-back-btn" class="back-button">Back</button>
+                        <button id="step-4-next-btn" class="next-button">Continue to Summary</button>
                     </div>
                 </div>
 
@@ -243,17 +248,78 @@
                     </div>
 
                     <div class="navigation-buttons">
-                        <button onclick="goToPreviousStep()" class="back-button">Back to Add-Ons</button>
+                        <button id="step-5-back-btn" class="back-button">Back to Add-Ons</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section id="portfolio-section" class="section container">
+        <div class="section-title">
+            <h2>Recent Work</h2>
+            <p>A glimpse into the moments we've captured.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/wedding-bride-arch.jpg" alt="Bridal Portrait in Archway">
+                <div class="overlay">
+                    <h3>Bridal Portraits</h3>
+                </div>
+            </div>
+
+            <div class="gallery-item wide">
+                <img src="images/wedding-party-group.jpg" alt="Large Wedding Party Group Photo">
+                <div class="overlay">
+                    <h3>Wedding Parties</h3>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/wedding-reception-dance.jpg" alt="Candid Reception Dancing">
+                <div class="overlay">
+                    <h3>Candid Moments</h3>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/engagement-propose.jpg" alt="Engagement Proposal">
+                <div class="overlay">
+                    <h3>Engagements</h3>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/grad-senior.jpg" alt="Senior Portrait">
+                <div class="overlay">
+                    <h3>Seniors</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/sports-bball.jpg" alt="Sports Portrait">
+                <div class="overlay">
+                    <h3>Sports</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/specialty-memorial.jpg" alt="Specialty Art">
+                <div class="overlay">
+                    <h3>Specialty Services</h3>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="https://adobe.ly/3P9IOGN" target="_blank" class="cta-button">View Full Portfolio</a>
+        </div>
+    </section>
+
     <section id="individual-photo-request-section" class="section container">
         <div class="section-title">
             <h2>Request Individual Photos</h2>
-            <p>Taken an individual photo at one of our events? Request it here! Price: $10 for individual photos (1 person), $20 for group photos (2 or more people).</p>
+            <p>Taken an individual photo at one of our events? Request it here! Price: $10 for individual photos (1
+                person), $20 for group photos (2 or more people).</p>
         </div>
         <div class="contact-form"> <!-- Reusing contact-form for styling, can be a more generic name too -->
             <form id="photo-request-form" action="https://formspree.io/f/xzzrljbw" method="POST">
@@ -278,7 +344,8 @@
                     <input type="number" id="request_num_people" name="request_num_people" min="1" required>
                 </div>
                 <div class="form-group">
-                    <label for="request_description">Description (optional - e.g., event name, what you were wearing)</label>
+                    <label for="request_description">Description (optional - e.g., event name, what you were
+                        wearing)</label>
                     <textarea id="request_description" name="request_description" rows="4"></textarea>
                 </div>
                 <div class="form-group">
@@ -306,7 +373,8 @@
                     </div>
                     <div class="footer-column">
                         <h3>Services</h3>
-                        <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ" target="_blank">Wedding Photography</a>
+                        <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ"
+                            target="_blank">Wedding Photography</a>
                         <a href="https://youtu.be/JMCvPcut658" target="_blank">Event Videography</a>
                         <a href="https://adobe.ly/3P9IOGN" target="_blank">Portrait Sessions</a>
                         <a href="https://youtu.be/JMCvPcut658" target="_blank">Commercial Production</a>
@@ -315,11 +383,14 @@
                         <h3>Contact</h3>
                         <p>Email: getmonieproductions@gmail.com</p>
                         <p>Phone: 337-356-2331</p>
-                        <p><a href="https://drive.google.com/file/d/1a3pqkJ_Do3fK2fCQLCQgpwPHPfHwA6Wu/view?usp=sharing" target="_blank">Virtual Business Card</a></p>
+                        <p><a href="https://drive.google.com/file/d/1a3pqkJ_Do3fK2fCQLCQgpwPHPfHwA6Wu/view?usp=sharing"
+                                target="_blank">Virtual Business Card</a></p>
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/GetMonieProductions/" class="social-icon" target="_blank">FB</a>
+                            <a href="https://www.facebook.com/GetMonieProductions/" class="social-icon"
+                                target="_blank">FB</a>
                             <a href="https://www.instagram.com/qmoniep/" class="social-icon" target="_blank">IG</a>
-                            <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ" class="social-icon" target="_blank">YT</a>
+                            <a href="https://youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ"
+                                class="social-icon" target="_blank">YT</a>
                         </div>
                     </div>
                 </div>
@@ -332,4 +403,5 @@
 
     <script src="package-builder.js"></script>
 </body>
+
 </html>
