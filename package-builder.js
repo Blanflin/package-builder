@@ -6,31 +6,31 @@ const packageData = {
       id: "wedding",
       name: "Wedding",
       description: "Capture every moment of your special day",
-      imageUrl: "https://unsplash.com/photos/464ps_nOflw/download?w=1350&q=80"
+      imageUrl: "images/wedding-couple-door.jpg"
     },
     {
       id: "small-event",
       name: "Small Event",
       description: "Perfect for birthdays, parties, and gatherings",
-      imageUrl: "https://unsplash.com/photos/Iy6sv_rxZHM/download?w=1350&q=80"
+      imageUrl: "images/business-group.jpg"
     },
     {
       id: "production",
       name: "Production",
       description: "Commercial, product, and promotional content",
-      imageUrl: "https://unsplash.com/photos/aS4Duj2j7r4/download?w=1350&q=80"
+      imageUrl: "images/commercial.jpg"
     },
     {
       id: "portrait",
       name: "Portrait Session",
       description: "Individual or family portrait photography",
-      imageUrl: "https://unsplash.com/photos/EJNwK3IH6GM/download?w=1350&q=80"
+      imageUrl: "images/business-portrait.jpg"
     },
     {
       id: "sports",
       name: "Sports",
       description: "Action-packed sports photography and print packages.",
-      imageUrl: "https://unsplash.com/photos/xxv_RmEKhT0/download?w=1350&q=80"
+      imageUrl: "images/sports-bball.jpg"
     }
   ],
   serviceTypes: [
@@ -504,6 +504,31 @@ document.addEventListener('DOMContentLoaded', function() {
       updatePhotoRequestPrice(); 
     }
   }
+
+  // Event Listeners for Buttons
+  const buildBtn = document.getElementById('build-btn');
+  if (buildBtn) buildBtn.addEventListener('click', scrollToBuilder);
+
+  const step2BackBtn = document.getElementById('step-2-back-btn');
+  if (step2BackBtn) step2BackBtn.addEventListener('click', goToPreviousStep);
+
+  const step3BackBtn = document.getElementById('step-3-back-btn');
+  if (step3BackBtn) step3BackBtn.addEventListener('click', goToPreviousStep);
+
+  const cardViewBtn = document.getElementById('card-view-btn');
+  if (cardViewBtn) cardViewBtn.addEventListener('click', () => setViewMode('card'));
+
+  const comparisonViewBtn = document.getElementById('comparison-view-btn');
+  if (comparisonViewBtn) comparisonViewBtn.addEventListener('click', () => setViewMode('comparison'));
+
+  const step4BackBtn = document.getElementById('step-4-back-btn');
+  if (step4BackBtn) step4BackBtn.addEventListener('click', goToPreviousStep);
+
+  const step4NextBtn = document.getElementById('step-4-next-btn');
+  if (step4NextBtn) step4NextBtn.addEventListener('click', goToNextStep);
+
+  const step5BackBtn = document.getElementById('step-5-back-btn');
+  if (step5BackBtn) step5BackBtn.addEventListener('click', () => goToPreviousStep()); // goToPreviousStep handles logic
 });
 
 // Function to scroll to the package builder section
