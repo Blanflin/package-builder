@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GET MONIE PRODUCTIONS | Sports & Photo Requests</title>
+<meta name="description" content="Order sports picture-day print packages or request an individual photo from a Get Monie Productions event."/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "primary": "#e7bf9a", "primary-container": "#c5a07d", "on-primary": "#432b11",
+        "surface": "#121414", "surface-container-low": "#1a1c1c", "surface-container": "#1e2020",
+        "on-surface": "#e2e2e2", "on-surface-variant": "#d3c4b8",
+        "outline": "#9b8e84", "outline-variant": "#4f453c", "background": "#121414", "error": "#ffb4ab"
+      },
+      maxWidth: { "container-max": "1440px" },
+      fontFamily: { "display": ["Playfair Display","serif"], "body": ["Manrope","sans-serif"] },
+      fontSize: {
+        "label-caps": ["12px", { "lineHeight":"16px","letterSpacing":"0.15em","fontWeight":"700" }],
+        "headline-md": ["32px", { "lineHeight":"40px","fontWeight":"500" }],
+        "headline-lg": ["48px", { "lineHeight":"56px","fontWeight":"600" }],
+        "body-lg": ["18px", { "lineHeight":"28px","fontWeight":"400" }],
+        "body-md": ["16px", { "lineHeight":"24px","fontWeight":"400" }]
+      }
+    }}
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background-color:#0d0d0d;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    color:#e2e2e2; font-family:"Manrope",sans-serif;
+  }
+  .font-display { font-family:"Playfair Display",serif; }
+  .material-symbols-outlined { font-family:"Material Symbols Outlined"; line-height:1; }
+  .glass-panel { background:rgba(255,255,255,0.03); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid rgba(231,191,154,0.2); box-shadow:inset 0 0 20px rgba(231,191,154,0.05); }
+  .light-leak { position:fixed; width:800px; height:800px; background:radial-gradient(circle,rgba(231,191,154,0.07) 0%,transparent 70%); pointer-events:none; z-index:-1; filter:blur(80px); }
+  .pkg-card { transition:all .25s ease; cursor:pointer; }
+  .pkg-card.sel { border-color:#e7bf9a; background:rgba(231,191,154,0.08); box-shadow:inset 0 0 18px rgba(231,191,154,0.12); }
+  ::selection { background:rgba(231,191,154,0.3); }
+</style>
+</head>
+<body class="overflow-x-hidden">
+<div class="light-leak top-[-20%] left-[-10%]"></div>
+<div class="light-leak bottom-[-10%] right-[-5%]"></div>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 w-full glass-panel border-b border-primary/20 px-5 md:px-20 py-4">
+  <div class="max-w-container-max mx-auto flex justify-between items-center">
+    <a class="flex items-center gap-3" href="index.html">
+      <img src="assets/logo/gm-monogram.jpg" alt="Get Monie Productions" class="w-11 h-9 object-cover rounded-sm border border-primary/30"/>
+      <span class="font-display text-primary text-lg md:text-xl font-bold tracking-tight leading-none">GET MONIE<span class="block text-[9px] tracking-[0.3em] text-on-surface-variant font-body font-bold">PRODUCTIONS</span></span>
+    </a>
+    <a href="index.html" class="border border-primary text-primary text-label-caps px-6 py-3 hover:bg-primary/10 transition-all active:scale-95 flex items-center gap-2"><span class="material-symbols-outlined text-base">arrow_back</span>MAIN SITE</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="px-5 md:px-20 max-w-container-max mx-auto pt-16 md:pt-24 pb-8 text-center">
+  <span class="text-primary text-label-caps block mb-4">ORDERS &amp; REQUESTS</span>
+  <h1 class="font-display text-4xl md:text-headline-lg text-on-surface mb-4">SPORTS &amp; PHOTO REQUESTS</h1>
+  <p class="text-body-md text-on-surface-variant max-w-2xl mx-auto">Order a sports picture-day print package, or request an individual photo from an event we covered.</p>
+</header>
+
+<!-- SPORTS -->
+<section class="px-5 md:px-20 max-w-container-max mx-auto py-12">
+  <div class="flex items-center gap-3 mb-8"><span class="material-symbols-outlined text-primary text-3xl">sports_basketball</span><h2 class="font-display text-3xl text-on-surface">Sports Picture-Day Packages</h2></div>
+  <p class="text-body-md text-on-surface-variant mb-3 max-w-3xl">Every package includes <span class="text-primary">one 8×10 team composite</span> and online access. Edits take roughly 2 weeks to a month. No retainer.</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8" id="sports-grid"></div>
+
+  <form id="sports-form" action="https://formspree.io/f/xzzrljbw" method="POST" class="glass-panel rounded-lg p-7 max-w-3xl">
+    <input type="hidden" name="request_type" value="Sports Picture-Day Order"/>
+    <input type="hidden" name="selected_sports_package" id="sports-pkg-field"/>
+    <input type="hidden" name="badge_tags_addon" id="badge-field" value="No"/>
+    <input type="hidden" name="order_total" id="sports-total-field"/>
+    <h3 class="font-display text-2xl text-primary mb-1">Place your sports order</h3>
+    <p class="text-[12px] text-outline mb-5">Selected: <span id="sports-selected" class="text-on-surface-variant">none yet</span> · Total: <span id="sports-total" class="text-primary font-bold">$0</span></p>
+    <label class="flex items-center gap-3 mb-6 cursor-pointer text-body-md">
+      <input type="checkbox" id="badge-toggle" class="w-5 h-5 rounded-sm bg-transparent border-outline-variant text-primary focus:ring-primary"/>
+      <span>Add <span class="text-on-surface">Badge Tags</span> — custom badge tag with your photo <span class="text-primary">(+$15)</span></span>
+    </label>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">ATHLETE NAME</label><input name="athlete_name" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">TEAM / LEAGUE</label><input name="team_league" class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">YOUR NAME</label><input name="parent_name" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">EMAIL</label><input type="email" name="email" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">PHONE</label><input type="tel" name="phone" class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">PICTURE DATE</label><input type="date" name="picture_date" class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+    </div>
+    <textarea name="notes" rows="3" placeholder="Anything else we should know?" class="w-full mt-5 bg-transparent border border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-3 py-2 rounded placeholder:text-outline"></textarea>
+    <button type="submit" class="w-full mt-5 bg-primary text-on-primary text-label-caps py-4 hover:bg-primary/90 transition-all active:scale-95">SUBMIT SPORTS ORDER</button>
+    <p id="sports-note" class="text-[11px] text-outline text-center mt-3"></p>
+  </form>
+</section>
+
+<!-- INDIVIDUAL PHOTO REQUEST -->
+<section class="px-5 md:px-20 max-w-container-max mx-auto py-12 pb-24">
+  <div class="flex items-center gap-3 mb-3"><span class="material-symbols-outlined text-primary text-3xl">image_search</span><h2 class="font-display text-3xl text-on-surface">Request an Individual Photo</h2></div>
+  <p class="text-body-md text-on-surface-variant mb-8 max-w-3xl">Were you photographed at one of our events? Request your shot here. <span class="text-on-surface">$10</span> for an individual photo (1 person), <span class="text-on-surface">$20</span> for a group photo (2 or more).</p>
+  <form id="photo-request-form" action="https://formspree.io/f/xzzrljbw" method="POST" class="glass-panel rounded-lg p-7 max-w-3xl">
+    <input type="hidden" name="request_type" value="Individual Photo Request"/>
+    <input type="hidden" name="estimated_price" id="photo-price-field"/>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">FULL NAME</label><input name="request_name" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">EMAIL</label><input type="email" name="request_email" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">EVENT DATE</label><input type="date" name="request_event_date" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">EVENT TIME (APPROX.)</label><input type="time" name="request_event_time" class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div><label class="text-label-caps text-[10px] text-on-surface-variant block mb-2">PEOPLE IN PHOTO</label><input type="number" name="request_num_people" id="num-people" min="1" value="1" required class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-2 py-2"/></div>
+      <div class="flex items-end"><div class="w-full"><span class="text-label-caps text-[10px] text-on-surface-variant block mb-2">ESTIMATED PRICE</span><span id="photo-price" class="font-display text-2xl text-primary">$10</span></div></div>
+    </div>
+    <textarea name="request_description" rows="3" placeholder="Event name, what you were wearing, where you were standing…" class="w-full mt-5 bg-transparent border border-outline-variant focus:ring-0 focus:border-primary text-on-surface px-3 py-2 rounded placeholder:text-outline"></textarea>
+    <button type="submit" class="w-full mt-5 bg-primary text-on-primary text-label-caps py-4 hover:bg-primary/90 transition-all active:scale-95">SUBMIT PHOTO REQUEST</button>
+    <p id="photo-note" class="text-[11px] text-outline text-center mt-3"></p>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-background border-t border-outline-variant py-10 px-5 md:px-20">
+  <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="flex items-center gap-3">
+      <img src="assets/logo/gm-monogram.jpg" alt="" class="w-10 h-8 object-cover rounded-sm border border-primary/30"/>
+      <div><span class="font-display text-lg text-primary font-bold block leading-none">GET MONIE PRODUCTIONS</span><span class="text-[10px] tracking-[0.3em] text-outline">YOUR CANVAS · ACADIANA</span></div>
+    </div>
+    <div class="flex gap-4">
+      <a href="https://www.facebook.com/GetMonieProductions/" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:border-primary hover:text-primary text-on-surface-variant transition-colors font-bold text-sm">f</a>
+      <a href="https://www.instagram.com/qmoniep/" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:border-primary hover:text-primary text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-lg">photo_camera</span></a>
+      <a href="https://www.youtube.com/playlist?list=PLaBGc1dfIKtSF7ybUANh37c_6wV055FfQ" target="_blank" rel="noopener" aria-label="YouTube" class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:border-primary hover:text-primary text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-lg">play_arrow</span></a>
+    </div>
+    <div class="text-outline text-[11px] text-center md:text-right">getmonieproductions@gmail.com · 337-356-2331<br/>© <span id="year"></span> GET MONIE PRODUCTIONS</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+const money = n => '$'+n.toLocaleString('en-US');
+
+/* ----- Sports packages ----- */
+const SPORTS = [
+  {id:'value', name:'VALUE', price:65, items:['2 — 8×10','4 — 5×7','4 — 4×5','24 Wallets','Online access']},
+  {id:'a', name:'A', price:50, items:['1 — 8×10','2 — 5×7','2 — 4×5','16 Wallets','Online access']},
+  {id:'b', name:'B', price:35, items:['1 — 8×10','2 — 5×7','12 Wallets','Online access']},
+  {id:'c', name:'C', price:25, items:['1 — 5×7','2 — 4×5','8 Wallets','Online access']},
+  {id:'noprint', name:'NO PRINT', price:20, items:['Digital only','Online access']}
+];
+let sportsSel = null;
+const sg = document.getElementById('sports-grid');
+sg.innerHTML = SPORTS.map(p=>`
+  <div class="pkg-card glass-panel rounded-lg p-5 flex flex-col" data-id="${p.id}">
+    <div class="flex justify-between items-baseline mb-3"><span class="text-label-caps text-on-surface">${p.name}</span><span class="font-display text-2xl text-primary">${money(p.price)}</span></div>
+    <ul class="text-[12px] text-on-surface-variant space-y-1.5 flex-1">${p.items.map(i=>`<li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>${i}</li>`).join('')}</ul>
+  </div>`).join('');
+
+function badgeOn(){ return document.getElementById('badge-toggle').checked; }
+function updateSports(){
+  const p = SPORTS.find(s=>s.id===sportsSel);
+  let total = p ? p.price : 0;
+  if(badgeOn()) total += 15;
+  document.getElementById('sports-selected').textContent = p ? (p.name + (badgeOn()?' + Badge Tags':'')) : 'none yet';
+  document.getElementById('sports-total').textContent = money(total);
+  document.getElementById('sports-pkg-field').value = p ? `${p.name} (${money(p.price)})` : '';
+  document.getElementById('badge-field').value = badgeOn() ? 'Yes (+$15)' : 'No';
+  document.getElementById('sports-total-field').value = money(total);
+}
+sg.addEventListener('click', e=>{
+  const c = e.target.closest('.pkg-card'); if(!c) return;
+  document.querySelectorAll('.pkg-card').forEach(x=>x.classList.remove('sel'));
+  c.classList.add('sel'); sportsSel = c.dataset.id; updateSports();
+});
+document.getElementById('badge-toggle').addEventListener('change', updateSports);
+
+/* ----- Individual photo price ----- */
+const np = document.getElementById('num-people');
+function updatePhoto(){
+  const n = parseInt(np.value||'1',10);
+  const price = (n>=2)?20:10;
+  document.getElementById('photo-price').textContent = money(price);
+  document.getElementById('photo-price-field').value = money(price);
+}
+np.addEventListener('input', updatePhoto);
+updatePhoto(); updateSports();
+
+/* ----- AJAX submit for both forms ----- */
+function wire(formId, noteId){
+  document.getElementById(formId).addEventListener('submit', async e=>{
+    e.preventDefault();
+    const form = e.target, note = document.getElementById(noteId);
+    note.classList.remove('text-error'); note.textContent = 'Sending…';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if(res.ok){ form.reset();
+        if(formId==='sports-form'){ document.querySelectorAll('.pkg-card').forEach(x=>x.classList.remove('sel')); sportsSel=null; updateSports(); }
+        else { updatePhoto(); }
+        note.textContent = 'Thank you — your request is in. We\'ll follow up by email shortly.'; note.classList.add('text-primary');
+      } else throw new Error();
+    } catch(err){ note.classList.add('text-error'); note.textContent = 'Something went wrong. Email us at getmonieproductions@gmail.com.'; }
+  });
+}
+wire('sports-form','sports-note');
+wire('photo-request-form','photo-note');
+</script>
+</body>
+</html>
