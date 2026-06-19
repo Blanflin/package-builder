@@ -98,7 +98,26 @@
   .addon-card.sel .addon-check { background:#e7bf9a; border-color:#e7bf9a; color:#432b11; }
   ::selection { background: rgba(231,191,154,0.3); }
   @media (max-width: 900px) { body { cursor: auto; } .custom-cursor { display:none; } }
+  /* ===== Concierge ===== */
+  #cc-panel{ transition:transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s ease; transform:translateY(24px) scale(.98); opacity:0; pointer-events:none; }
+  #cc-panel.open{ transform:none; opacity:1; pointer-events:auto; }
+  #cc-scroll{ scrollbar-width:thin; scrollbar-color:#4f453c transparent; }
+  #cc-scroll::-webkit-scrollbar{ width:6px; } #cc-scroll::-webkit-scrollbar-thumb{ background:#4f453c; border-radius:3px; }
+  .cc-bubble{ animation:cc-rise .4s ease both; }
+  @keyframes cc-rise{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:none;} }
+  .cc-chip{ transition:all .18s ease; }
+  .cc-chip:hover{ border-color:#e7bf9a; color:#e7bf9a; }
+  .cc-chip.sel{ border-color:#e7bf9a; background:rgba(231,191,154,0.12); color:#e7bf9a; }
+  .cc-dots span{ display:inline-block; width:5px; height:5px; margin:0 1px; border-radius:50%; background:#9b8e84; animation:cc-blink 1.2s infinite both; }
+  .cc-dots span:nth-child(2){ animation-delay:.2s; } .cc-dots span:nth-child(3){ animation-delay:.4s; }
+  @keyframes cc-blink{ 0%,80%,100%{ opacity:.3; } 40%{ opacity:1; } }
+  #cc-fab{ animation:cc-pulse 3.5s ease-in-out infinite; }
+  @keyframes cc-pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(231,191,154,.35);} 50%{ box-shadow:0 0 0 12px rgba(231,191,154,0);} }
+  @media (max-width:640px){ #cc-panel{ inset:0; width:100vw !important; height:100dvh !important; max-height:none !important; border-radius:0 !important; bottom:0 !important; right:0 !important; } }
+  @media (prefers-reduced-motion: reduce){ #cc-panel,.cc-bubble,#cc-fab{ animation:none !important; transition:opacity .2s ease !important; } }
 </style>
+<!-- Privacy-friendly analytics -->
+<script data-goatcounter="https://gmproductions.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body class="overflow-x-hidden">
 <div class="custom-cursor hidden md:block" id="cursor"></div>
@@ -388,6 +407,15 @@ const money = n => '$' + n.toLocaleString('en-US');
 const PRICING = {
   wedding: {
     label:'Wedding', icon:'favorite',
+    intro:"Congratulations! 🎉 Let's make sure your day is captured like the masterpiece it is — I'll have a tailored package ready in about a minute.",
+    feel:"What matters most to you?",
+    feelOptions:[
+      {label:'Photos for our walls', addons:['album','img25']},
+      {label:'A film we\'ll replay', addons:['doc','ceremony']},
+      {label:'Sharing it fast', addons:['trailer','reel']},
+      {label:'A bit of everything', addons:['cam2','drone']}
+    ],
+    recommended:['cam2','drone','trailer','reel'],
     services: {
       'photo-video': { label:'Photo + Video', note:'Our signature — best value', tiers:[
         {id:'4hr', label:'4 Hours', base:2000, deliver:'up to 250 images + 3–5 min film'},
@@ -417,8 +445,7 @@ const PRICING = {
       {id:'img25', label:'Extra 25 edited images', price:150, copy:'Expand the gallery beyond the cap.'},
       {id:'rush', label:'Rush delivery (2 weeks)', price:300, copy:'Jump the 4–6 week queue.'},
       {id:'loc', label:'Additional location', price:100, copy:'Second venue / first-look site within the day.'},
-      {id:'giftbox', label:'Premium gift box', price:150, copy:'Boxed USB + signature prints.'},
-      {id:'stream', label:'Live-stream the ceremony', price:300, copy:'Streamed + recorded for family who can\'t attend.'}
+      {id:'giftbox', label:'Premium gift box', price:150, copy:'Boxed USB + signature prints.'}
     ],
     presets: [
       {name:'Essential', service:'photo-video', tier:'4hr', addons:['cam2'], total:2400},
@@ -429,6 +456,15 @@ const PRICING = {
   },
   portrait: {
     label:'Portrait', icon:'person',
+    intro:"Love it. Portraits are where personality shines — let's tailor a session that feels like you.",
+    feel:"What's the goal for these portraits?",
+    feelOptions:[
+      {label:'Look my absolute best', addons:['outfit','full']},
+      {label:'Lots of variety', addons:['outfit','loc','img10']},
+      {label:'Something to print & keep', addons:['album','full']},
+      {label:'Share on social', addons:['video','full']}
+    ],
+    recommended:['outfit','video','full','album'],
     services: {
       'photo': { label:'Photography', tiers:[
         {id:'mini', label:'Mini', base:150, deliver:'45 min · 1 outfit · 15 edited images'},
@@ -440,7 +476,6 @@ const PRICING = {
       {id:'loc', label:'Extra location', price:75, copy:'Travel to a second backdrop.'},
       {id:'img10', label:'Extra 10 edited images', price:120, copy:'Grow the gallery.'},
       {id:'full', label:'Full gallery (all candids)', price:150, copy:'Every keeper edited, not just the cap.'},
-      {id:'hmua', label:'Hair & makeup styling', price:125, copy:'Pro glam before the shoot.'},
       {id:'video', label:'Highlight / social video', price:150, copy:'A short vertical reel from the session.'},
       {id:'rush', label:'Rush delivery (3 days)', price:100, copy:'Skip the 1–2 week queue.'},
       {id:'album', label:'Mini album / print credit', price:150, copy:'A small printed keepsake or print credit.'},
@@ -449,6 +484,15 @@ const PRICING = {
   },
   event: {
     label:'Small Event', icon:'celebration',
+    intro:"Nice — every gathering has its moments. Let's make sure yours are kept.",
+    feel:"What would make this feel captured?",
+    feelOptions:[
+      {label:'A film to remember it by', addons:['recap','reel']},
+      {label:'Big group, lots going on', addons:['shooter','hour']},
+      {label:'A standout aerial moment', addons:['drone','reel']},
+      {label:'Prints for the family', addons:['print','hour']}
+    ],
+    recommended:['drone','recap','reel','hour'],
     services: {
       'photo-video': { label:'Photo + Video', tiers:[
         {id:'1hr', label:'1 Hour', base:500, deliver:'Combined photo + video recap'},
@@ -475,6 +519,15 @@ const PRICING = {
   },
   commercial: {
     label:'Commercial', icon:'storefront',
+    intro:"Great — let's make your brand look like the real deal. Tell me what you need and I'll scope it.",
+    feel:"What's the main goal of this shoot?",
+    feelOptions:[
+      {label:'Ads & social content', addons:['cutdown','license','graphics']},
+      {label:'A polished brand film', addons:['op2','graphics']},
+      {label:'Show off the space/product', addons:['drone','loc']},
+      {label:'Team & headshots', addons:['headshots','op2']}
+    ],
+    recommended:['drone','op2','cutdown','license'],
     services: {
       'photo-video': { label:'Photo + Video', tiers:[
         {id:'half', label:'Half-Day', base:1900, deliver:'Photo + video team, half day'},
@@ -643,6 +696,327 @@ $('contact-form').addEventListener('submit', async e=>{
 });
 
 renderEvents();
+</script>
+
+<!-- ============================================================= -->
+<!-- ===== BOOKING CONCIERGE  (free, no API, reuses PRICING) ====== -->
+<!-- ============================================================= -->
+<button id="cc-fab" onclick="CC.toggle()" aria-label="Open the booking concierge"
+  class="fixed bottom-6 right-6 z-[60] flex items-center gap-2 bg-primary text-on-primary rounded-full pl-4 pr-5 py-3 shadow-2xl hover:bg-primary/90 transition active:scale-95">
+  <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">auto_awesome</span>
+  <span class="text-[12px] tracking-[0.12em] font-bold hidden sm:inline">BUILD MY PACKAGE</span>
+</button>
+
+<div id="cc-panel" role="dialog" aria-label="Booking concierge"
+  class="fixed bottom-6 right-6 z-[61] w-[calc(100vw-2rem)] sm:w-[400px] h-[640px] max-h-[85vh] glass-panel rounded-2xl flex flex-col overflow-hidden">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-outline-variant/60 bg-surface-container/60">
+    <div class="flex items-center gap-3">
+      <span class="w-9 h-9 rounded-full border border-primary/40 flex items-center justify-center text-primary bg-primary/10">
+        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">auto_awesome</span></span>
+      <div class="leading-tight text-left">
+        <span class="font-display text-primary text-lg block">Monie Concierge</span>
+        <span class="text-[10px] tracking-[0.2em] text-outline">YOUR PERSONAL PACKAGE BUILDER</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-1">
+      <button id="cc-back" onclick="CC.back()" aria-label="Go back" class="text-outline hover:text-primary transition hidden"><span class="material-symbols-outlined">undo</span></button>
+      <button onclick="CC.close()" aria-label="Close" class="text-outline hover:text-primary transition"><span class="material-symbols-outlined">close</span></button>
+    </div>
+  </div>
+  <div id="cc-progress" class="h-1 bg-outline-variant/30"><div id="cc-progress-bar" class="h-full bg-primary transition-all duration-500" style="width:0%"></div></div>
+  <div id="cc-scroll" class="flex-1 overflow-y-auto px-4 py-5 space-y-4" aria-live="polite"></div>
+  <div id="cc-input" class="px-4 py-4 border-t border-outline-variant/60 bg-surface-container/40 min-h-[64px] flex flex-wrap gap-2 items-center"></div>
+</div>
+
+<script>
+/* ============ CONCIERGE CONFIG — edit these freely ============ */
+const CC_CFG = {
+  /* TODO: paste your PUBLIC Calendly link (the "Copy link" button on your meeting type).
+     Example: 'https://calendly.com/getmonieproductions/consult'  */
+  calendly: 'https://calendly.com/REPLACE-WITH-YOUR-LINK',
+  /* Completion perk for building + sending today (value-add, not a discount). */
+  incentive: 'a complimentary engagement mini-session',
+  /* Temporary "see the work" proof link (swap for specific clips Mon). */
+  proof: 'https://docs.google.com/document/d/1LQUS4t3Ip2G1G0cDNENUdhojWi25Q78N/edit?usp=sharing',
+  /* Instant phone alert via Telegram. Paste the bot token from @BotFather and your
+     chat ID. Leave as PASTE_... to disable until you're set up. (See setup steps in chat.) */
+  telegram: { token:'8969591896:AAFDgC1CysUnabm_thFEU5ZvM8x9slmQCyk', chatId:'8770163858' }
+};
+
+const CC = (() => {
+  const $id = id => document.getElementById(id);
+  const panel=()=>$id('cc-panel'), scroll=()=>$id('cc-scroll'), inputBar=()=>$id('cc-input');
+  const state = { name:'', event:null, service:null, tier:null, addons:new Set(), date:'', email:'',
+                  started:false, showAll:false, sent:false, priceSensitive:false, budgetOffered:false };
+  const HIST=[]; // step stack for back button
+  const SAVE='gm_concierge_v1';
+
+  /* ---- analytics ---- */
+  function track(name){ try{ if(window.goatcounter&&goatcounter.count) goatcounter.count({path:'concierge/'+name, title:'Concierge: '+name, event:true}); }catch(e){} }
+
+  /* ---- persistence ---- */
+  function save(){ try{ localStorage.setItem(SAVE, JSON.stringify({name:state.name,event:state.event,service:state.service,tier:state.tier,addons:[...state.addons],date:state.date,sent:state.sent})); }catch(e){} }
+  function loadSaved(){ try{ const r=localStorage.getItem(SAVE); return r?JSON.parse(r):null; }catch(e){ return null; } }
+
+  function open(){ panel().classList.add('open'); $id('cc-fab').style.display='none'; track('open');
+    if(!state.started){ state.started=true; boot(); } }
+  function close(){ panel().classList.remove('open'); $id('cc-fab').style.display=''; }
+  function toggle(){ panel().classList.contains('open')?close():open(); }
+  function scrollDown(){ const s=scroll(); s.scrollTop=s.scrollHeight; }
+  function progress(p){ $id('cc-progress-bar').style.width=p+'%'; }
+
+  /* ---- message + input primitives ---- */
+  function bot(html,delay=400){ return new Promise(res=>{
+    const t=document.createElement('div'); t.className='cc-bubble flex';
+    t.innerHTML='<div class="bg-surface-container-high rounded-2xl rounded-tl-sm px-4 py-3"><span class="cc-dots"><span></span><span></span><span></span></span></div>';
+    scroll().appendChild(t); scrollDown();
+    setTimeout(()=>{ t.remove(); const b=document.createElement('div'); b.className='cc-bubble flex';
+      b.innerHTML='<div class="bg-surface-container-high text-on-surface text-[14px] leading-relaxed rounded-2xl rounded-tl-sm px-4 py-3 max-w-[90%]">'+html+'</div>';
+      scroll().appendChild(b); scrollDown(); res(); }, delay); }); }
+  function user(text){ const b=document.createElement('div'); b.className='cc-bubble flex justify-end';
+    b.innerHTML='<div class="bg-primary text-on-primary text-[14px] rounded-2xl rounded-tr-sm px-4 py-3 max-w-[85%]">'+text+'</div>';
+    scroll().appendChild(b); scrollDown(); }
+  function clearInput(){ inputBar().innerHTML=''; }
+  function chips(items){ clearInput(); items.forEach(it=>{ const c=document.createElement('button');
+    c.className='cc-chip text-[12px] tracking-wide border border-outline-variant text-on-surface-variant rounded-full px-4 py-2 '+(it.full?'w-full text-left ':'')+(it.cls||'');
+    c.innerHTML=it.label; c.onclick=()=>it.onClick(c); inputBar().appendChild(c); }); }
+  function textInput(placeholder,cb,type){ clearInput();
+    const form=document.createElement('form'); form.className='flex w-full gap-2';
+    const i=document.createElement('input'); i.type=type||'text'; i.placeholder=placeholder; i.required=true;
+    i.className='flex-1 bg-transparent border border-outline-variant focus:border-primary focus:ring-0 rounded-full px-4 py-2 text-on-surface text-[14px] placeholder:text-outline';
+    const s=document.createElement('button'); s.type='submit'; s.className='bg-primary text-on-primary rounded-full w-10 h-10 flex items-center justify-center hover:bg-primary/90 active:scale-95';
+    s.innerHTML='<span class="material-symbols-outlined text-[20px]">send</span>';
+    form.appendChild(i); form.appendChild(s);
+    form.onsubmit=e=>{ e.preventDefault(); const v=i.value.trim(); if(!v) return; cb(v); };
+    inputBar().appendChild(form); i.focus(); }
+  function showBack(on){ $id('cc-back').classList.toggle('hidden',!on); }
+  function goto(fn,p){ HIST.push({fn,p}); showBack(HIST.length>1); if(p!=null)progress(p); fn(); }
+  function back(){ if(HIST.length<2) return; HIST.pop(); const prev=HIST[HIST.length-1]; showBack(HIST.length>1);
+    user('↩ back'); if(prev.p!=null)progress(prev.p); prev.fn(); }
+
+  /* ---- pricing helpers (reuse global PRICING & money) ---- */
+  const ev=()=>PRICING[state.event];
+  const svc=()=>ev().services[state.service];
+  const tier=()=>svc().tiers.find(t=>t.id===state.tier);
+  const findAddon=id=>ev().addons.find(a=>a.id===id);
+  function total(){ let s=tier()?tier().base:0; state.addons.forEach(id=>{const a=findAddon(id); if(a)s+=a.price;}); return s; }
+  function separately(){ const e=ev(); if(state.service!=='photo-video'||!e.services.photo||!e.services.video) return null;
+    const p=e.services.photo.tiers.find(t=>t.id===state.tier), v=e.services.video.tiers.find(t=>t.id===state.tier);
+    return (p&&v)?p.base+v.base:null; }
+
+  const CROSS={ wedding:{drone:['trailer','Those aerials look unreal in a same-day teaser.']},
+    event:{drone:['reel','Aerials make a killer social recap.']},
+    commercial:{drone:['cutdown','Great aerial b-roll deserves an extra cutdown for more placements.']} };
+
+  /* ===================== FLOW ===================== */
+  async function boot(){
+    const sv=loadSaved();
+    if(sv && sv.event && sv.tier && !sv.sent){
+      await bot("Welcome back! 👋");
+      await bot('Want to pick up your <b>'+PRICING[sv.event].label+'</b> package where you left off?');
+      chips([
+        {label:'Yes, resume', cls:'!border-primary !text-primary', onClick:()=>{ state.name=sv.name||''; state.event=sv.event; state.service=sv.service; state.tier=sv.tier; state.addons=new Set(sv.addons||[]); user('Resume'); goto(showSummary,80); }},
+        {label:'Start fresh', onClick:()=>{ user('Start fresh'); state.name=sv.name||''; askName(); }}
+      ]);
+      return;
+    }
+    askName();
+  }
+  async function askName(){
+    progress(8);
+    await bot("Hey there — I'm your Get Monie concierge. ✨");
+    await bot("I'll ask a few quick questions and build a package tailored to you — no forms, no haggling. First, what should I call you?");
+    textInput('Your first name', async v=>{ state.name=v; user(v); save(); await bot("Lovely to meet you, "+esc(v)+"! What are we celebrating?"); goto(askEvent,16); });
+  }
+  function askEvent(){
+    chips(Object.entries(PRICING).map(([k,v])=>({
+      label:'<span class="material-symbols-outlined align-middle text-[16px] mr-1">'+v.icon+'</span>'+v.label,
+      onClick:async()=>{ state.event=k; state.service=null; state.tier=null; state.addons.clear(); state.showAll=false; state.budgetOffered=false;
+        user(v.label); track('event/'+k); save(); await bot(v.intro); goto(askService,32); }
+    })));
+  }
+  async function askService(){
+    const e=ev(), keys=Object.keys(e.services);
+    if(keys.length===1){ state.service=keys[0]; askTier(); return; }
+    await bot("Do you want <b>photos</b>, <b>video</b>, or <b>both</b>? Booking both together is always our best value — one coordinated crew, and it costs less than booking each on its own.");
+    chips(keys.map(k=>({ label:e.services[k].label+(e.services[k].note?' <span class="text-primary">· best value</span>':''), full:true,
+      onClick:()=>{ state.service=k; state.tier=null; state.addons.clear(); user(e.services[k].label); save(); goto(askTier,48); } })));
+  }
+  async function askTier(){
+    await bot('How much coverage do you need? Here\'s what each <b>'+svc().label+'</b> base includes:');
+    chips(svc().tiers.map((t,i)=>({
+      label:'<span class="flex justify-between gap-3 w-full"><span>'+t.label+'</span><span class="text-primary font-display">'+money(t.base)+'</span></span><span class="block text-[11px] text-outline mt-1">'+t.deliver+'</span>', full:true,
+      onClick:()=>{ state.tier=t.id; if(i===0) state.priceSensitive=true; user(t.label+' — '+money(t.base)); save(); afterTier(); } })));
+  }
+  async function afterTier(){
+    const t=tier(), sep=separately();
+    let msg='Smart pick. 👌 Your <b>'+money(t.base)+'</b> base isn\'t just the shoot — it includes your <b>consultation</b>, <b>'+t.deliver+'</b>, full <b>professional editing</b> (color, audio & retouching), and <b>online delivery</b>. No hidden fees, ever.';
+    if(sep && sep>t.base) msg+='<br><br>💡 Booked separately, photo + video would run about <b>'+money(sep)+'</b> — your bundle saves you <b>'+money(sep-t.base)+'</b>.';
+    await bot(msg);
+    // bundle upsell for single-service
+    const e=ev();
+    if(state.service!=='photo-video' && e.services['photo-video']){
+      const bt=e.services['photo-video'].tiers.find(x=>x.id===state.tier);
+      const other=state.service==='photo'?'video':'photo';
+      const ot=e.services[other]&&e.services[other].tiers.find(x=>x.id===state.tier);
+      if(bt && ot){ const up=bt.base-t.base, later=ot.base;
+        if(up>0){ await bot('Want the full story? Make it <b>Photo + Video</b> for just <b>+'+money(up)+'</b> now. Booking '+other+' later would be '+money(later)+' — so you\'d <b>save '+money(later-up)+'</b>.');
+          chips([{label:'Yes — make it Photo + Video', full:true, cls:'!border-primary !text-primary', onClick:()=>{ state.service='photo-video'; user('Make it Photo + Video'); save(); goto(askFeel,60); }},
+                 {label:'No, keep '+svc().label, onClick:()=>{ user('Keep '+svc().label); goto(askFeel,60); }}]);
+          return; } }
+    }
+    goto(askFeel,60);
+  }
+  async function askFeel(){
+    const e=ev();
+    if(!e.feel){ return askAddons(); }
+    await bot(e.feel+' I\'ll pre-pick a few touches that fit — you can change anything.');
+    chips(e.feelOptions.map(o=>({ label:o.label, full:true, onClick:()=>{ o.addons.forEach(id=>{ if(findAddon(id)) state.addons.add(id); }); user(o.label); save(); reinforce(); } })));
+  }
+  async function reinforce(){
+    await bot('Perfect. Here are the touches '+(state.event==='commercial'?'brands':'clients')+' love most — tap any that speak to you. Tap <b>'+esc(state.name||'')+'\'s</b> picks again to remove. <a href="'+CC_CFG.proof+'" target="_blank" rel="noopener" class="text-primary border-b border-primary">See real examples →</a>',460);
+    askAddons();
+  }
+  function addonList(){ const e=ev(); return state.showAll?e.addons:e.addons.filter(a=>(e.recommended||[]).includes(a.id)||state.addons.has(a.id)); }
+  function askAddons(){
+    progress(72); clearInput();
+    const wrap=document.createElement('div'); wrap.className='w-full space-y-2';
+    addonList().forEach(a=>{ const sel=state.addons.has(a.id); const c=document.createElement('button');
+      c.className='cc-chip w-full text-left border rounded-xl px-3 py-2.5 flex items-start gap-2.5 '+(sel?'sel':'border-outline-variant');
+      c.innerHTML='<span class="material-symbols-outlined text-[18px] mt-0.5 '+(sel?'text-primary':'text-outline')+'">'+(sel?'check_circle':'add_circle')+'</span>'+
+        '<span class="flex-1"><span class="flex justify-between gap-2"><span class="text-[12px] font-bold tracking-wide text-on-surface">'+a.label+'</span><span class="text-primary font-display text-[13px] shrink-0">+'+money(a.price)+'</span></span>'+
+        '<span class="block text-[11px] text-outline leading-snug mt-0.5">'+a.copy+'</span></span>';
+      c.onclick=()=>{ state.addons.has(a.id)?state.addons.delete(a.id):state.addons.add(a.id); save(); askAddons(); };
+      wrap.appendChild(c); });
+    const actions=document.createElement('div'); actions.className='flex flex-wrap gap-2 pt-1';
+    const e=ev();
+    if(!state.showAll && e.addons.length>addonList().length){ const m=document.createElement('button');
+      m.className='cc-chip text-[12px] border border-outline-variant text-on-surface-variant rounded-full px-3 py-2'; m.textContent='Show all options';
+      m.onclick=()=>{ state.showAll=true; askAddons(); }; actions.appendChild(m); }
+    const fq=document.createElement('button'); fq.className='cc-chip text-[12px] border border-outline-variant text-on-surface-variant rounded-full px-3 py-2';
+    fq.textContent='I have a question'; fq.onclick=()=>askFAQ(); actions.appendChild(fq);
+    const bg=document.createElement('button'); bg.className='cc-chip text-[12px] border border-outline-variant text-on-surface-variant rounded-full px-3 py-2';
+    bg.textContent='Working within a budget?'; bg.onclick=()=>budgetMode(true); actions.appendChild(bg);
+    const done=document.createElement('button');
+    done.className='w-full bg-primary text-on-primary text-[12px] tracking-[0.12em] font-bold rounded-full px-4 py-3 hover:bg-primary/90 transition active:scale-95';
+    done.textContent=state.addons.size?'SEE MY PACKAGE · '+money(total()):'SKIP — SEE MY PACKAGE';
+    done.onclick=()=>{ user(state.addons.size?'Added '+state.addons.size+(state.addons.size>1?' touches':' touch'):'No extras for now'); track('build'); crossSell(); };
+    clearInput(); inputBar().appendChild(wrap); inputBar().appendChild(actions); inputBar().appendChild(done); scrollDown();
+    // proactive budget offer once, if price-sensitive and not added much
+    if(state.priceSensitive && !state.budgetOffered && state.addons.size===0){ state.budgetOffered=true; setTimeout(()=>offerBudget(),300); }
+  }
+  async function offerBudget(){ await bot('Want me to work to a number? Tell me your ceiling and I\'ll pack in the most value under it.');
+    chips([{label:'Yes, set a budget', cls:'!border-primary !text-primary', onClick:()=>budgetMode(true)},{label:'No thanks', onClick:()=>askAddons()}]); }
+  async function budgetMode(ask){ track('budget'); user('Set a budget');
+    await bot('What\'s the most you\'d like to spend? (Just a number — I\'ll get you as close as possible.)');
+    textInput('e.g. 3000', v=>{ const cap=parseInt(v.replace(/[^0-9]/g,''),10); if(!cap){ askAddons(); return; } user(money(cap)); buildToBudget(cap); },'text'); }
+  async function buildToBudget(cap){
+    const tiers=svc().tiers.slice().sort((a,b)=>a.base-b.base);
+    let chosen=tiers.filter(t=>t.base<=cap).pop()||tiers[0];
+    state.tier=chosen.id; state.addons.clear();
+    const order=(ev().recommended||[]).map(findAddon).filter(Boolean).concat(ev().addons.filter(a=>!(ev().recommended||[]).includes(a.id)));
+    order.forEach(a=>{ if(total()+a.price<=cap) state.addons.add(a.id); });
+    save();
+    if(chosen.base>cap) await bot('Our entry '+svc().label+' base is '+money(chosen.base)+', so we\'re just above '+money(cap)+' — but it\'s our best value and includes the full edit. Here\'s what I\'d do:');
+    else await bot('Here\'s the most value I can pack under '+money(cap)+' — base + the touches that matter most:');
+    goto(showSummary,88);
+  }
+  async function crossSell(){
+    const map=CROSS[state.event]; let done=true;
+    if(map){ for(const base in map){ const [partner,why]=map[base];
+      if(state.addons.has(base)&&!state.addons.has(partner)&&findAddon(partner)){ done=false;
+        const a=findAddon(partner);
+        await bot('One thing — '+why+' Add the <b>'+a.label+'</b> for <b>+'+money(a.price)+'</b>?');
+        chips([{label:'Yes, add it', cls:'!border-primary !text-primary', onClick:()=>{ state.addons.add(partner); user('Added'); save(); goto(showSummary,88); }},
+               {label:'No thanks', onClick:()=>{ user('No thanks'); goto(showSummary,88); }}]);
+        break; } } }
+    if(done) goto(showSummary,88);
+  }
+  function presetBadge(){ if(state.event!=='wedding'||!ev().presets) return ''; const tot=total();
+    let best=null,d=1e9; ev().presets.forEach(p=>{ const diff=Math.abs(p.total-tot); if(diff<d){d=diff;best=p;} });
+    if(!best) return ''; const exact=(best.total===tot);
+    return '<div class="text-[10px] tracking-[0.2em] text-primary mb-3">'+(exact?'OUR ':'≈ OUR ')+best.name.toUpperCase()+' EXPERIENCE'+(best.star?' ★':'')+'</div>'; }
+  async function showSummary(){
+    const e=ev(), t=tier(), sep=separately();
+    await bot('Here\'s your tailored package, '+esc(state.name||'')+'. Every line is something you can see and hold onto:');
+    const card=document.createElement('div'); card.className='cc-bubble';
+    let lines='<div class="flex justify-between text-[13px] mb-2"><span class="text-on-surface font-bold">'+e.services[state.service].label+' · '+t.label+'</span><span class="text-on-surface">'+money(t.base)+'</span></div>'+
+      '<div class="text-[11px] text-outline mb-3 leading-snug">'+t.deliver+' · consultation · full pro editing · online delivery</div>';
+    state.addons.forEach(id=>{ const a=findAddon(id); if(a) lines+='<div class="flex justify-between text-[12px] mb-0.5"><span class="text-on-surface-variant">+ '+a.label+'</span><span class="text-on-surface-variant">'+money(a.price)+'</span></div><div class="text-[10px] text-outline mb-2 leading-snug">'+a.copy+'</div>'; });
+    let savings = (sep&&sep>total())?'<div class="text-[11px] text-primary mt-2">You\'re saving '+money(sep-t.base)+' vs booking photo + video separately.</div>':'';
+    card.innerHTML='<div class="glass-panel rounded-2xl p-4">'+presetBadge()+lines+
+      '<div class="border-t border-outline-variant/60 mt-2 pt-3 flex justify-between items-end"><span class="text-[11px] tracking-[0.15em] text-on-surface-variant">ESTIMATED TOTAL</span><span class="font-display text-3xl text-primary">'+money(total())+'</span></div>'+savings+
+      '<p class="text-[10px] text-outline mt-2 leading-snug">An estimate, not a final quote. We\'ll confirm every detail on your free consultation.</p></div>';
+    scroll().appendChild(card); scrollDown();
+    await bot('Love it? I\'ll send this to Monie with your details — no retyping.',460);
+    chips([
+      {label:'<span class="material-symbols-outlined align-middle text-[16px] mr-1">send</span>Send my inquiry', full:true, cls:'!bg-primary !text-on-primary !border-primary font-bold justify-center !text-center', onClick:askDate},
+      {label:'Email me this quote', onClick:()=>emailQuote()},
+      {label:'Tweak add-ons', onClick:()=>{ user('Tweak it'); goto(askAddons,72); }},
+      {label:'I have a question', onClick:()=>askFAQ()},
+      {label:'Start over', onClick:()=>restart()}
+    ]);
+  }
+  async function askDate(){ user('Send my inquiry'); await bot('Almost there! What\'s your event date? (Even a rough month helps us check availability — type "not sure" if undecided.)');
+    textInput('e.g. Oct 18, 2026', v=>{ state.date=v; user(v); askEmail(); }); }
+  async function askEmail(){ await bot('And the best email (or phone) to reach you?');
+    textInput('you@email.com', v=>{ state.email=v; user(v); sendInquiry(); },'text'); }
+  function inquiryText(){ const e=ev(), t=tier();
+    let txt='Package request — '+e.label+'\nFrom: '+(state.name||'(no name)')+'\nService: '+e.services[state.service].label+'\nBase: '+t.label+' ('+t.deliver+') — '+money(t.base)+'\n';
+    if(state.addons.size){ txt+='Add-ons:\n'; state.addons.forEach(id=>{const a=findAddon(id); if(a) txt+='  • '+a.label+' — '+money(a.price)+'\n';}); }
+    txt+='Estimated total: '+money(total())+'\nEvent date: '+(state.date||'(not given)')+'\n'; return txt; }
+  function formAction(){ const f=document.getElementById('contact-form'); return (f&&f.action)||'https://formspree.io/f/xyzwqnyo'; }
+  async function postFormspree(extra){ const fd=new FormData();
+    fd.append('name',state.name||''); fd.append('email',state.email||''); fd.append('event_date',state.date||'');
+    fd.append('message',inquiryText()+(extra||'')); fd.append('package_summary',inquiryText()); fd.append('estimated_total',money(total()));
+    fd.append('_subject','New '+ev().label+' request · '+money(total())+' · '+(state.date||'date TBD')+' — via Concierge');
+    const r=await fetch(formAction(),{method:'POST',body:fd,headers:{'Accept':'application/json'}}); if(!r.ok) throw new Error('bad'); }
+  function notifyTelegram(text){ const t=CC_CFG.telegram; if(!t||!t.token||/^PASTE/.test(t.token)||/^PASTE/.test(t.chatId)) return;
+    try{ fetch('https://api.telegram.org/bot'+t.token+'/sendMessage',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:t.chatId,text:text})}); }catch(e){} }
+  async function sendInquiry(){
+    await bot('Sending to Monie\'s inbox…',250);
+    try{ await postFormspree(); state.sent=true; save(); track('send');
+      notifyTelegram('🔔 New '+ev().label+' inquiry — '+(state.name||'client')+' · '+money(total())+' · '+(state.date||'date TBD')+'. Details in email.'); }
+    catch(e){ await bot('Hmm, that didn\'t go through. You can email us directly at <a href="mailto:getmonieproductions@gmail.com" class="text-primary border-b border-primary">getmonieproductions@gmail.com</a> — your quote is above.'); return; }
+    await bot('Done, '+esc(state.name||'')+'! 🎉 Your package is in Monie\'s inbox and you\'ll hear back within a day.');
+    await bot('🎁 Because you built &amp; sent today, your consultation includes <b>'+CC_CFG.incentive+'</b>. We\'ll set it up when we talk.',520);
+    await bot('Want to lock in a quick consult now?');
+    chips([
+      {label:'<span class="material-symbols-outlined align-middle text-[16px] mr-1">event</span>Book my consult', full:true, cls:'!border-primary !text-primary', onClick:()=>{ track('call'); window.open(CC_CFG.calendly,'_blank','noopener'); }},
+      {label:'Email me my quote too', onClick:()=>emailQuote(true)},
+      {label:'I\'m all set', onClick:()=>{ user('All set'); bot('Wonderful — talk soon! 💛'); clearInput(); }}
+    ]);
+  }
+  async function emailQuote(after){ if(state.email && after){ /* already have it */ }
+    if(!state.email){ await bot('Sure — what email should I send your quote to?'); textInput('you@email.com',async v=>{ state.email=v; user(v); await doEmailQuote(); },'email'); return; }
+    await doEmailQuote(); }
+  async function doEmailQuote(){ await bot('Sending your quote…',250);
+    try{ await postFormspree('\n\n[Customer requested a copy of this quote.]'); track('quote-email'); save();
+      await bot('Sent! 📩 Check '+esc(state.email)+' — and we\'ve got it on our end too, so reach out anytime.'); }
+    catch(e){ await bot('Couldn\'t send just now, but your quote is saved above. Email us at getmonieproductions@gmail.com anytime.'); }
+  }
+  async function askFAQ(){ await bot('Happy to help — what would you like to know?');
+    const Q=[
+      ['Deposit & payment','A 30% non-refundable retainer books your date; the balance is due two weeks before. We\'ll walk through timing on your consult.'],
+      ['Do we get RAW files?','Every file we deliver is fully edited (color, audio, retouching) — that\'s the art you\'re paying for. We don\'t hand off RAW/unedited files.'],
+      ['How fast is delivery?','Weddings land in about 4–6 weeks, portraits in 1–3. Need it sooner? Add Rush delivery.'],
+      ['Do you travel?','We\'re based in Acadiana and cover the area; longer distances may add a small travel fee — we\'ll confirm on your consult.'],
+      ['What\'s always included?','Every base includes your consultation, the shoot, a capped edited gallery/film, full pro editing, and online delivery — no hidden fees.']
+    ];
+    const items=Q.map(q=>({label:q[0], full:true, onClick:async()=>{ user(q[0]); await bot(q[1]);
+      if(q[0]==='Deposit & payment'){ state.priceSensitive=true; }
+      faqBack(); }}));
+    items.push({label:'↩ Back to my package', onClick:()=>{ state.addons.size||state.tier?goto(showSummary,88):goto(askAddons,72); }});
+    chips(items);
+  }
+  function faqBack(){ chips([{label:'Another question', onClick:()=>askFAQ()},{label:'↩ Back to my package', cls:'!border-primary !text-primary', onClick:()=>{ state.tier?goto(showSummary,88):goto(askAddons,72); }}]); }
+  function restart(){ user('Start over'); const nm=state.name; Object.assign(state,{event:null,service:null,tier:null,addons:new Set(),showAll:false,priceSensitive:false,budgetOffered:false,sent:false}); state.name=nm; save(); HIST.length=0;
+    bot('Fresh start'+(nm?(', '+esc(nm)):'')+' — what are we celebrating?').then(()=>goto(askEvent,16)); }
+  function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  return { open, close, toggle, back };
+})();
 </script>
 </body>
 </html>
